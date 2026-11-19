@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BYS Landing · Concept A2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* Concept A — Editorial rows: the reference's list-and-divider rhythm. */
+  .hdr { position: sticky; top: 0; z-index: 50; height: 77px; display: flex; align-items: center; background: var(--lp-bg); }
+  .hdr .wrap { width: 100%; display: flex; align-items: center; gap: 24px; }
+  .hdr nav { display: flex; gap: 0; margin-left: 16px; }
+  .hdr .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .hero { padding: 64px 0 0; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 560px; gap: 64px; align-items: center; }
+  .hero h1 .hl { background: var(--lp-accent); color: var(--lp-text-on-light); padding: 0 12px; }
+  .hero p.lead { margin-top: 24px; max-width: 540px; }
+  .cta-block { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .hero .eyebrow { display: block; margin-bottom: 24px; }
+  .hero h1 .cursor { display: inline-block; width: .42em; height: .78em; background: var(--lp-accent); margin-left: .12em; vertical-align: -.04em; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .hero h1 .cursor { animation: none; } }
+  .hero-art { position: relative; height: 600px; }
+  .hero-art .portrait { position: absolute; right: 0; top: 0; width: 480px; height: 600px; object-fit: cover; object-position: 60% 30%; }
+  .hero-art .store { position: absolute; left: 0; bottom: 40px; width: 320px; background: var(--lp-bg); border: var(--lp-border-width) solid var(--lp-divider); padding: 16px; }
+  .trust { margin-top: 80px; border-top: 1px solid var(--lp-divider); border-bottom: 1px solid var(--lp-divider); display: grid; grid-template-columns: auto auto 1px 1fr; gap: 40px; align-items: center; padding: 24px 0; }
+  .trust .mono { filter: brightness(0) invert(1); }
+  .trust .vr { width: 1px; height: 56px; background: var(--lp-divider); }
+  .trust .users { display: flex; align-items: center; gap: 16px; }
+
+  section.s { padding: var(--lp-section-y) 0; }
+  .s-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; gap: 32px; }
+  .label { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .label::before { content: ""; width: 8px; height: 16px; background: var(--lp-accent); }
+
+  /* How it works — big stacked lines, dim until in focus (reference "SO FAR") */
+  /* How it works — journey cards (from concept B) */
+  .jcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .jcard { background: var(--lp-surface); border: var(--lp-border-width) solid var(--lp-surface-border); padding: 48px; display: flex; flex-direction: column; gap: 16px; min-height: 440px; }
+  .jcard img { width: 52px; margin-top: auto; }
+
+  /* Features — sticky list left, images right (from concept B) */
+  .feat-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .feat-list { position: sticky; top: 140px; align-self: start; }
+  .feat-list li { list-style: none; padding: 24px 0; border-top: 1px solid var(--lp-divider); color: var(--lp-text-muted); transition: color .3s; cursor: pointer; }
+  .feat-list li:last-child { border-bottom: 1px solid var(--lp-divider); }
+  .feat-list li p { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s; }
+  .feat-list li p > span { overflow: hidden; }
+  .feat-list li.on { color: var(--lp-text); }
+  .feat-list li.on p { grid-template-rows: 1fr; }
+  .feat-list li.on p > span { padding-top: 16px; }
+  .feat-imgs { display: grid; gap: 120px; padding: 40px 0; }
+  .feat-imgs .img { background: var(--lp-surface); border: var(--lp-border-width) solid var(--lp-surface-border); padding: 32px; }
+  /* Feature visual 2 · Theme — abstract UI fragment, Linear-like (2026-11-18) */
+  .feat-imgs .img.vis { padding: 0; }
+  .vis-theme { position: relative; height: 400px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, #000 70%, transparent 98%), linear-gradient(to bottom, #000 72%, transparent 100%);
+    -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, #000 70%, transparent 98%), linear-gradient(to bottom, #000 72%, transparent 100%); mask-composite: intersect; }
+  .vis-theme .act { position: absolute; left: 48px; width: 160px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--lp-bg); border: var(--lp-border-width) solid var(--lp-divider); color: var(--lp-text); }
+  .vis-theme .wires { position: absolute; inset: 0; pointer-events: none; }
+  .vis-theme .wires path { fill: none; stroke: var(--lp-divider); stroke-width: 1; }
+  .vis-theme .wires circle { fill: var(--lp-accent); }
+  .vis-theme .card { position: absolute; left: 320px; top: 64px; width: 400px; background: var(--lp-bg); border: var(--lp-border-width) solid var(--lp-divider); }
+  .vis-theme .card .ph { position: relative; height: 92px; }
+  .vis-theme .card .ph img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%; filter: grayscale(1) contrast(1.05); }
+  .vis-theme .card .body { padding: 24px; display: grid; gap: 12px; justify-items: start; }
+  .vis-theme .card h4 { position: relative; color: var(--lp-text); }
+  .vis-theme .card .ln { height: 8px; background: var(--lp-surface); border: var(--lp-border-width) solid var(--lp-surface-border); }
+  .vis-theme .card .ghost { margin-top: 8px; padding: 8px 12px; border: var(--lp-border-width) solid var(--lp-border-strong); }
+  .vis-theme .card .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px 24px; }
+  .vis-theme .card .tiles span { height: 88px; background: var(--lp-surface); border: var(--lp-border-width) solid var(--lp-surface-border); }
+  /* Feature visual 3 · Ready to sell pages — page anatomy that assembles on scroll (2026-11-18) */
+  .vis-page { position: relative; height: 440px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); }
+  .vis-page .mini { position: absolute; left: 32px; top: 40px; width: 560px; transform: scale(.7); transform-origin: 0 0;
+    background: var(--lp-bg); border: var(--lp-border-width) solid var(--lp-divider); font: 400 16px/1.4 var(--lp-font); letter-spacing: -0.01em; }
+  .vis-page .mini .top { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: var(--lp-border-width) solid var(--lp-divider); }
+  .vis-page .mini .top b { width: 72px; height: 10px; background: var(--lp-surface); border: var(--lp-border-width) solid var(--lp-surface-border); }
+  .vis-page .mini .top .search { margin-left: auto; width: 160px; height: 32px; border: var(--lp-border-width) solid var(--lp-divider); }
+  .vis-page .mini .main { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding: 24px; }
+  .vis-page .mini .ph { align-self: start; } .vis-page .mini .ph img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+  .vis-page .mini .info { display: grid; gap: 12px; align-content: start; }
+  .vis-page .mini .ttl { font-weight: 700; }
+  .vis-page .mini .muted { color: var(--lp-text-muted); }
+  .vis-page .mini .box { border: var(--lp-border-width) solid var(--lp-divider); padding: 10px 12px; color: var(--lp-text-muted); }
+  .vis-page .mini .row { display: flex; gap: 8px; align-items: center; }
+  .vis-page .mini .sel-in { border: var(--lp-border-width) solid var(--lp-divider); padding: 8px 12px; }
+  .vis-page .mini .buy { padding: 12px; text-align: center; font-weight: 700; text-transform: uppercase; background: var(--lp-accent); color: var(--lp-text-on-light); }
+  .vis-page .mini .feat { padding: 0 24px 24px; display: grid; gap: 10px; }
+  .vis-page .mini .feat i { height: 10px; background: var(--lp-surface); border: var(--lp-border-width) solid var(--lp-surface-border); }
+  .vis-page [data-mark] { position: relative; outline: var(--lp-border-width) dashed transparent; outline-offset: 4px; transition: outline-color .3s; }
+  .vis-page .wires { position: absolute; inset: 0; pointer-events: none; }
+  .vis-page .wires path { fill: none; stroke: var(--lp-divider); stroke-width: 1; }
+  .vis-page .wires circle { fill: var(--lp-accent); }
+  .vis-page .act { position: absolute; left: 452px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--lp-bg); border: var(--lp-border-width) solid var(--lp-divider); color: var(--lp-text); white-space: nowrap; }
+  .vis-page .act svg { color: var(--lp-accent); }
+  /* Assembly: blocks start as grey placeholders and fill in one by one, once */
+  .vis-page .blk { position: relative; }
+  .vis-page .blk::after { content: ""; position: absolute; inset: 0; background: #212222; border: var(--lp-border-width) solid var(--lp-surface-border); transition: opacity .45s ease; transition-delay: calc(var(--d) * 140ms); }
+  .vis-page .wires, .vis-page .act { opacity: 0; transition: opacity .4s ease 1.5s; }
+  .vis-page.built .blk::after { opacity: 0; }
+  .vis-page.built .wires, .vis-page.built .act { opacity: 1; }
+  .vis-page.built [data-mark] { outline-color: var(--lp-accent); transition-delay: 1.5s; }
+  @media (prefers-reduced-motion: reduce) { .vis-page .blk::after, .vis-page .wires, .vis-page .act, .vis-page [data-mark] { transition: none; } }
+  .vis-theme .sel { position: absolute; border: var(--lp-border-width) dashed var(--lp-accent); pointer-events: none; }
+  .vis-theme .sel i { position: absolute; width: 6px; height: 6px; background: var(--lp-accent); }
+  .vis-theme .sel i:nth-of-type(1) { left: -3px; top: -3px; } .vis-theme .sel i:nth-of-type(2) { right: -3px; top: -3px; }
+  .vis-theme .sel i:nth-of-type(3) { left: -3px; bottom: -3px; } .vis-theme .sel i:nth-of-type(4) { right: -3px; bottom: -3px; }
+  .center-cta { margin-top: 48px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  /* Features — editorial rows */
+  .feat { display: grid; grid-template-columns: 80px 1fr 640px; gap: 32px; padding: 48px 0; border-top: 1px solid var(--lp-divider); align-items: start; }
+  .feat:last-of-type { border-bottom: 1px solid var(--lp-divider); }
+  .feat p { margin-top: 24px; max-width: 460px; }
+  .feat .img { background: var(--lp-surface); }
+
+  /* Light section — customers */
+  .light { background: var(--lp-bg-light); color: var(--lp-text-on-light); }
+  .light .label::before { background: var(--lp-text-on-light); }
+  .q-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--lp-text-on-light); }
+  .q-grid > div { padding: 32px 32px 32px 0; }
+  .q-grid > div + div { padding-left: 32px; border-left: 1px solid var(--lp-text-on-light); }
+  .q-grid .who { margin-top: 24px; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+
+  /* Experts — media cards slider */
+  .slider { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .slider::-webkit-scrollbar { display: none; }
+  .mcard { flex: 0 0 332px; height: 480px; position: relative; scroll-snap-align: start; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; }
+  .mcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+  .mcard::after { content: ""; position: absolute; inset: 0; background: var(--lp-overlay); }
+  .mcard:hover img { transform: scale(1.04); }
+  .mcard > div { position: relative; z-index: 1; }
+  .mcard .who { margin-top: 16px; }
+  .ctrls { display: flex; gap: 8px; }
+
+  .stores .card { flex: 0 0 420px; scroll-snap-align: start; }
+  .stores .card .meta { display: flex; justify-content: space-between; align-items: center; margin: 16px 0; }
+
+  /* FAQ — divider rows */
+  .faq-row { border-top: 1px solid var(--lp-divider); padding: 24px 0; cursor: pointer; }
+  .faq-row:last-child { border-bottom: 1px solid var(--lp-divider); }
+  .faq-row .q { display: flex; justify-content: space-between; gap: 32px; align-items: center; }
+  .faq-row .pm { width: 28px; height: 28px; border: var(--lp-border-width) solid var(--lp-border-strong); display: grid; place-items: center; flex: none; transition: transform .3s; }
+  .faq-row[aria-expanded="true"] .pm { transform: rotate(45deg); background: var(--lp-text); color: var(--lp-text-on-light); }
+  .faq-row .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s; }
+  .faq-row .a > div { overflow: hidden; max-width: 880px; }
+  .faq-row[aria-expanded="true"] .a { grid-template-rows: 1fr; }
+  .faq-row[aria-expanded="true"] .a > div { padding-top: 16px; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; }
+
+  .final { padding: var(--lp-section-y-lg) 0 var(--lp-section-y); display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 64px; border-bottom: 1px solid var(--lp-divider); }
+  footer { padding: 64px 0 32px; }
+  .fcols { display: grid; grid-template-columns: 1.2fr repeat(4, 1fr); gap: 32px; }
+  .fcols ul { list-style: none; display: grid; gap: 8px; margin-top: 16px; }
+  .fcols a:hover { color: var(--lp-text); }
+  .legal { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--lp-divider); display: flex; justify-content: space-between; }
+  .legal div { display: flex; gap: 32px; }
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap" id="hdr"></div></header>
+<main id="app"></main>
+<script charset="utf-8" src="content.js"></script>
+<script charset="utf-8">
+const L = LP;
+const cta = (center) => `<div class="${center ? "center-cta" : "cta-block"}">
+  <a class="btn btn-primary t-button" href="#">${L.cta} ${ARROW}</a>
+  <span class="t-body">${L.ctaNote}</span></div>`;
+
+document.getElementById("hdr").innerHTML = `
+  <a href="#"><img src="assets/bys-logo-white.svg" width="216" height="27" alt="Build Your Store"></a>
+  <nav>${L.nav.map(n => `<a class="btn btn-ghost t-button" href="#">${n} ${CHEV}</a>`).join("")}
+    ${L.navPlain.map(n => `<a class="btn btn-ghost t-button" href="#">${n}</a>`).join("")}</nav>
+  <div class="right"><a class="btn btn-ghost t-button" href="#">${L.login}</a>
+    <a class="btn btn-primary t-button" href="#">${L.cta} ${ARROW}</a></div>`;
+
+const ICON_TEXT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6V4h14v2M12 4v16M9 20h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>';
+const ICON_IMG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 4h18v16H3zM3 16l5-5 5 5 3-3 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/><path d="M15.5 8.5h1" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
+// Labels "Add text" / "Add image", headline and button text come from the live feature image and the
+// DressUp store screenshot (front-page-bl-3-2-v3.png, created-with-us-3.png). No new copy.
+const H = '<i></i><i></i><i></i><i></i>';
+const visTheme = () => `<div class="vis-theme" aria-hidden="true">
+  <svg class="wires" width="100%" height="100%">
+    <path d="M208 121 C 272 121 274 191 337 191"/><circle cx="337" cy="191" r="3"/>
+    <path d="M208 241 C 268 241 252 111 315 111"/><circle cx="315" cy="111" r="3"/>
+  </svg>
+  <div class="card">
+    <div class="ph"><img src="assets/theme-banner-crop.jpg" alt=""><span class="sel" style="inset:-6px">${H}</span></div>
+    <div class="body">
+      <h4 class="t-button">Unleash your style<span class="sel" style="inset:-6px -8px">${H}</span></h4>
+      <span class="ln" style="width:85%"></span><span class="ln" style="width:60%"></span>
+      <span class="ghost t-button">New collection</span>
+    </div>
+    <div class="tiles"><span></span><span></span><span></span></div>
+  </div>
+  <span class="act t-button" style="top:100px">${ICON_TEXT}Add text</span>
+  <span class="act t-button" style="top:220px">${ICON_IMG}Add image</span>
+</div>`;
+
+// Copy on visual 3 comes from the live feature image front-page-bl-3-3-v3.png
+// ("Free Shipping" also appears on front-page-bl-3-2-v3.png). No new copy.
+const ICON_CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>';
+const visPage = () => `<div class="vis-page" aria-hidden="true">
+  <div class="mini">
+    <div class="top"><b></b><b style="width:48px"></b><b style="width:56px"></b><span class="search"></span></div>
+    <div class="main">
+      <span class="blk ph" style="--d:0"><img src="assets/page-product-crop.jpg" alt=""></span>
+      <div class="info">
+        <span class="blk ttl" style="--d:1">4 in 1 Electric Pet Grooming Kit</span>
+        <span class="blk" style="--d:2">$20.52 USD</span>
+        <span class="blk box" style="--d:3" data-mark="ship">Free shipping to: Elein av., 30, UK<br>Receive between: July 30 and August 21</span>
+        <span class="blk row" style="--d:4" data-mark="warranty">${ICON_CHECK}30 Days Warranty</span>
+        <span class="blk row muted" style="--d:5">${ICON_CHECK}7 days for exchanges and returns</span>
+        <span class="blk sel-in muted" style="--d:6">White02</span>
+        <span class="blk buy" style="--d:7" data-mark="buy">Buy it now</span>
+        <span class="blk muted" style="--d:8">Incredible! Beautiful craftsmanship.<br><b>Emma, USA</b></span>
+      </div>
+    </div>
+    <div class="feat"><i class="blk" style="--d:9;width:30%"></i><i style="width:92%"></i><i style="width:84%"></i><i style="width:88%"></i></div>
+  </div>
+  <svg class="wires" width="100%" height="100%"></svg>
+  <span class="act t-button" data-to="ship">${ICON_CHECK}Free shipping</span>
+  <span class="act t-button" data-to="warranty">${ICON_CHECK}30 Days Warranty</span>
+  <span class="act t-button" data-to="buy">${ICON_CHECK}Buy it now</span>
+</div>`;
+// Place the chips beside their blocks and draw the wires (positions depend on the scaled page).
+function wirePage() {
+  const v = document.querySelector(".vis-page"); if (!v) return;
+  const r = v.getBoundingClientRect(); let d = "";
+  v.querySelectorAll(".act").forEach((chip, k) => {
+    const m = v.querySelector(`[data-mark="${chip.dataset.to}"]`).getBoundingClientRect();
+    const y = m.top - r.top + m.height / 2, top = 70 + k * 96;
+    chip.style.top = top + "px";
+    const x1 = m.right - r.left + 3, x2 = chip.offsetLeft, y2 = top + chip.offsetHeight / 2, mx = (x1 + x2) / 2;
+    d += `<path d="M${x1} ${y} C ${mx} ${y} ${mx} ${y2} ${x2} ${y2}"/><circle cx="${x1}" cy="${y}" r="3"/>`;
+  });
+  v.querySelector(".wires").innerHTML = d;
+}
+
+document.getElementById("app").innerHTML = `
+<section class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow t-button accent">${L.hero.eyebrow}</span>
+      <h1 class="t-display-xs">${L.hero.pre} <span class="hl">${L.hero.free}</span> ${L.hero.post.replace(/(\S+)$/, '<span style="white-space:nowrap">$1<span class="cursor" aria-hidden="true"></span></span>')}</h1>
+      <p class="lead t-body">${L.hero.body}</p>
+      ${cta()}
+    </div>
+    <div class="hero-art">
+      <img class="portrait" src="assets/lior-phone-booth.jpg" alt="Lior Pozin">
+      <div class="store"><img src="assets/front-page-bl-1-default-desktop.webp" alt="An AI-built Shopify store"></div>
+    </div>
+  </div>
+  <div class="trust">
+    <img class="mono" src="assets/front-page-bl-1-1.webp" width="255" alt="Shopify partners">
+    <img src="assets/front-page-bl-1-2.webp" width="80" alt="Shopify commerce coach">
+    <div class="vr"></div>
+    <div class="users"><img src="assets/front-page-bl-1-3.webp" width="92" alt=""><span class="t-body">${L.trustCustomers}</span></div>
+  </div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <div class="s-head"><h2 class="t-title">${L.how.title}</h2></div>
+  <div class="jcards">${L.how.steps.map((s, i) => `<article class="jcard">
+    <span class="label t-button" style="margin:0">Step 0${i + 1}</span>
+    <h3 class="t-title">${s.t}</h3><p class="t-body">${s.d}</p>
+    <img src="${s.icon}" alt=""></article>`).join("")}</div>
+  ${cta(true)}
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap feat-wrap">
+  <ul class="feat-list">${L.features.map((f, i) => `<li data-i="${i}" class="${i ? "" : "on"}">
+    <h3 class="t-title">${f.t}</h3><p class="t-body"><span>${f.d}</span></p></li>`).join("")}</ul>
+  <div class="feat-imgs">${L.features.map((f, i) => `<div class="img${i === 1 || i === 2 ? " vis" : ""}" data-f="${i}">${i === 1 ? visTheme() : i === 2 ? visPage() : `<img src="${i === 0 ? "assets/feat-1-cut.png" : f.img}" alt="">`}</div>`).join("")}</div>
+</div><div class="wrap">${cta(true)}</div></section>
+
+<section class="s light"><div class="wrap">
+  <div class="s-head"><div><div class="label t-button">${L.customers.sub}</div><h2 class="t-title">${L.customers.title}</h2></div></div>
+  <div class="q-grid">${L.customers.quotes.map(q => `<div><p class="t-body">“${q.q}”</p><div class="who t-button">${q.a}</div></div>`).join("")}</div>
+  <div class="shots">${L.customers.shots.map(s => `<img src="${s}" alt="">`).join("")}</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <div class="s-head"><h2 class="t-title" style="max-width:1000px">${L.experts.title}</h2>
+    <div class="ctrls"><button class="arrow-btn" data-sl="ex" data-d="-1" aria-label="Previous" style="transform:scaleX(-1)">${ARROW}</button><button class="arrow-btn" data-sl="ex" data-d="1" aria-label="Next">${ARROW}</button></div></div>
+  <div class="slider" id="ex">${L.experts.items.map(e => `<article class="mcard"><img src="${e.img}" alt="${e.n}"><div>
+    <p class="t-body">“${e.q}”</p><div class="who t-button">${e.n}</div><div class="t-body">${e.r}</div></div></article>`).join("")}</div>
+</div></section>
+
+<section class="s stores"><div class="wrap">
+  <div class="s-head"><div><div class="label t-button">${L.created.sub}</div><h2 class="t-title">${L.created.title}</h2></div>
+    <div class="ctrls"><button class="arrow-btn" data-sl="st" data-d="-1" aria-label="Previous" style="transform:scaleX(-1)">${ARROW}</button><button class="arrow-btn" data-sl="st" data-d="1" aria-label="Next">${ARROW}</button></div></div>
+  <div class="slider" id="st">${L.created.stores.map(s => `<article class="card"><img src="${s.img}" alt="${s.n} store">
+    <div class="meta"><span class="t-button">${s.n}</span><span class="t-body">👍 ${s.r}</span></div>
+    <a class="btn btn-pill t-button" href="#">${L.created.use} ${ARROW}</a></article>`).join("")}</div>
+  ${cta(true)}
+</div></section>
+
+<section class="s"><div class="wrap faq-grid">
+  <h2 class="t-title">${L.faq.title}</h2>
+  <div>${L.faq.items.map(([q, a]) => `<div class="faq-row" data-faq aria-expanded="false">
+    <div class="q"><span class="t-button">${q}</span><span class="pm">+</span></div>
+    <div class="a"><div class="t-body">${esc(a)}</div></div></div>`).join("")}</div>
+</div></section>
+
+<div class="wrap"><div class="final"><h2 class="t-display-xs">${L.final}</h2>${cta()}</div></div>
+
+<footer><div class="wrap">
+  <div class="fcols"><div><img src="assets/bys-logo-white.svg" width="216" alt="Build Your Store"><p class="t-body" style="margin-top:16px">${L.footer.lead}</p></div>
+    ${L.footer.cols.map(([h, ls]) => `<div><div class="t-button">${h}</div><ul>${ls.map(l => `<li><a class="t-body" href="#">${l}</a></li>`).join("")}</ul></div>`).join("")}</div>
+  <div class="legal"><span class="t-body">${L.footer.copy}</span><div>${L.footer.legal.map(l => `<a class="t-body" href="#">${l}</a>`).join("")}</div></div>
+</div></footer>`;
+
+faqToggle();
+document.querySelectorAll("[data-sl]").forEach(b => b.addEventListener("click", () => {
+  const el = document.getElementById(b.dataset.sl); el.scrollBy({ left: b.dataset.d * 348, behavior: "smooth" });
+}));
+const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("in", e.isIntersecting)), { rootMargin: "-35% 0px -35% 0px" });
+const fio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) {
+  document.querySelectorAll(".feat-list li[data-i]").forEach(li => li.classList.toggle("on", li.dataset.i === e.target.dataset.f)); } }),
+  { rootMargin: "-45% 0px -45% 0px" });
+document.querySelectorAll("[data-f]").forEach(el => fio.observe(el));
+wirePage(); addEventListener("resize", wirePage);
+const pio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("built"); pio.disconnect(); } }), { threshold: 0.5 });
+document.querySelectorAll(".vis-page").forEach(el => pio.observe(el));
+document.querySelectorAll(".feat-list li[data-i]").forEach(li => li.addEventListener("click", () =>
+  document.querySelector(`[data-f="${li.dataset.i}"]`).scrollIntoView({ behavior: "smooth", block: "center" })));
+panel("a2");
+</script>
+</body>
+</html>

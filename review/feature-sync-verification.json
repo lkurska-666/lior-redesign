@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-19",
+  "clicks": [
+    {
+      "action": "click 1",
+      "image": "An existing fashion storefront with customizable text and images",
+      "index": 1,
+      "pictureTop": 48
+    },
+    {
+      "action": "click 2",
+      "image": "Existing desktop and mobile product pages for a pet store",
+      "index": 2,
+      "pictureTop": 48
+    },
+    {
+      "action": "click 3",
+      "image": "An existing backpack storefront with a free .store domain",
+      "index": 3,
+      "pictureTop": 48
+    },
+    {
+      "action": "click 0",
+      "image": "Two winning product cards with a lantern and a wireless charging stand",
+      "index": 0,
+      "pictureTop": 48
+    },
+    {
+      "action": "click 3",
+      "image": "An existing backpack storefront with a free .store domain",
+      "index": 3,
+      "pictureTop": 48
+    },
+    {
+      "action": "click 1",
+      "image": "An existing fashion storefront with customizable text and images",
+      "index": 1,
+      "pictureTop": 48
+    }
+  ],
+  "layoutStable": true,
+  "noOverflow": true,
+  "scrolling": [
+    {
+      "action": "scroll -0.1",
+      "image": "Two winning product cards with a lantern and a wireless charging stand",
+      "index": 0,
+      "pictureTop": 98
+    },
+    {
+      "action": "scroll 0.2",
+      "image": "Two winning product cards with a lantern and a wireless charging stand",
+      "index": 0,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 0.99",
+      "image": "Two winning product cards with a lantern and a wireless charging stand",
+      "index": 0,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 1.01",
+      "image": "An existing fashion storefront with customizable text and images",
+      "index": 1,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 1.99",
+      "image": "An existing fashion storefront with customizable text and images",
+      "index": 1,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 2.01",
+      "image": "Existing desktop and mobile product pages for a pet store",
+      "index": 2,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 2.99",
+      "image": "Existing desktop and mobile product pages for a pet store",
+      "index": 2,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 3.01",
+      "image": "An existing backpack storefront with a free .store domain",
+      "index": 3,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 3.99",
+      "image": "An existing backpack storefront with a free .store domain",
+      "index": 3,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 4.2",
+      "image": "An existing backpack storefront with a free .store domain",
+      "index": 3,
+      "pictureTop": -52
+    },
+    {
+      "action": "scroll 3.2",
+      "image": "An existing backpack storefront with a free .store domain",
+      "index": 3,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 2.2",
+      "image": "Existing desktop and mobile product pages for a pet store",
+      "index": 2,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 1.2",
+      "image": "An existing fashion storefront with customizable text and images",
+      "index": 1,
+      "pictureTop": 48
+    },
+    {
+      "action": "scroll 0.2",
+      "image": "Two winning product cards with a lantern and a wireless charging stand",
+      "index": 0,
+      "pictureTop": 48
+    }
+  ],
+  "stageHeight": 666,
+  "step": 500,
+  "viewport": [
+    1450,
+    1376
+  ],
+  "additionalChecks": {
+    "desktop1440x900": "All four items show exactly one matching picture and fit the viewport.",
+    "keyboard": "Enter activates Ready to sell pages and its matching picture.",
+    "wheel": "470px down selects the free-domain picture; scrolling back restores the previous selection.",
+    "directLink": "#feature-2 selects High converting & customizable theme."
+  }
+}

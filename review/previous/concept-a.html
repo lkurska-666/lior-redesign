@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BYS Landing · Concept A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* Concept A — Editorial rows: the reference's list-and-divider rhythm. */
+  .hdr { position: sticky; top: 0; z-index: 50; height: 77px; display: flex; align-items: center; background: var(--lp-bg); }
+  .hdr .wrap { width: 100%; display: flex; align-items: center; gap: 24px; }
+  .hdr nav { display: flex; gap: 0; margin-left: 16px; }
+  .hdr .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .hero { padding: 80px 0 0; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 560px; gap: 64px; align-items: center; }
+  .hero h1 .hl { background: var(--lp-accent); color: var(--lp-text-on-light); padding: 0 12px; }
+  .hero p.lead { margin-top: 24px; max-width: 540px; }
+  .cta-block { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .hero-img { background: var(--lp-surface); padding: 32px; }
+  .trust { margin-top: 80px; border-top: 1px solid var(--lp-divider); border-bottom: 1px solid var(--lp-divider); display: grid; grid-template-columns: auto auto 1px 1fr; gap: 40px; align-items: center; padding: 24px 0; }
+  .trust .mono { filter: brightness(0) invert(1); }
+  .trust .vr { width: 1px; height: 56px; background: var(--lp-divider); }
+  .trust .users { display: flex; align-items: center; gap: 16px; }
+
+  section.s { padding: var(--lp-section-y) 0; }
+  .s-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; gap: 32px; }
+  .label { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .label::before { content: ""; width: 8px; height: 16px; background: var(--lp-accent); }
+
+  /* How it works — big stacked lines, dim until in focus (reference "SO FAR") */
+  .steps .row { display: grid; grid-template-columns: 80px 1fr 360px; gap: 32px; align-items: center; padding: 32px 0; border-top: 1px solid var(--lp-divider); color: var(--lp-text-muted); transition: color .4s; }
+  .steps .row:last-child { border-bottom: 1px solid var(--lp-divider); }
+  .steps .row.in { color: var(--lp-text); }
+  .steps .row img { width: 40px; opacity: .4; transition: opacity .4s; }
+  .steps .row.in img { opacity: 1; }
+  .center-cta { margin-top: 48px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  /* Features — editorial rows */
+  .feat { display: grid; grid-template-columns: 80px 1fr 640px; gap: 32px; padding: 48px 0; border-top: 1px solid var(--lp-divider); align-items: start; }
+  .feat:last-of-type { border-bottom: 1px solid var(--lp-divider); }
+  .feat p { margin-top: 24px; max-width: 460px; }
+  .feat .img { background: var(--lp-surface); }
+
+  /* Light section — customers */
+  .light { background: var(--lp-bg-light); color: var(--lp-text-on-light); }
+  .light .label::before { background: var(--lp-text-on-light); }
+  .q-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--lp-text-on-light); }
+  .q-grid > div { padding: 32px 32px 32px 0; }
+  .q-grid > div + div { padding-left: 32px; border-left: 1px solid var(--lp-text-on-light); }
+  .q-grid .who { margin-top: 24px; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+
+  /* Experts — media cards slider */
+  .slider { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .slider::-webkit-scrollbar { display: none; }
+  .mcard { flex: 0 0 332px; height: 480px; position: relative; scroll-snap-align: start; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; }
+  .mcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+  .mcard::after { content: ""; position: absolute; inset: 0; background: var(--lp-overlay); }
+  .mcard:hover img { transform: scale(1.04); }
+  .mcard > div { position: relative; z-index: 1; }
+  .mcard .who { margin-top: 16px; }
+  .ctrls { display: flex; gap: 8px; }
+
+  .stores .card { flex: 0 0 420px; scroll-snap-align: start; }
+  .stores .card .meta { display: flex; justify-content: space-between; align-items: center; margin: 16px 0; }
+
+  /* FAQ — divider rows */
+  .faq-row { border-top: 1px solid var(--lp-divider); padding: 24px 0; cursor: pointer; }
+  .faq-row:last-child { border-bottom: 1px solid var(--lp-divider); }
+  .faq-row .q { display: flex; justify-content: space-between; gap: 32px; align-items: center; }
+  .faq-row .pm { width: 28px; height: 28px; border: 1.5px solid var(--lp-border-strong); display: grid; place-items: center; flex: none; transition: transform .3s; }
+  .faq-row[aria-expanded="true"] .pm { transform: rotate(45deg); background: var(--lp-text); color: var(--lp-text-on-light); }
+  .faq-row .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s; }
+  .faq-row .a > div { overflow: hidden; max-width: 880px; }
+  .faq-row[aria-expanded="true"] .a { grid-template-rows: 1fr; }
+  .faq-row[aria-expanded="true"] .a > div { padding-top: 16px; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; }
+
+  .final { padding: var(--lp-section-y-lg) 0 var(--lp-section-y); display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 64px; border-bottom: 1px solid var(--lp-divider); }
+  footer { padding: 64px 0 32px; }
+  .fcols { display: grid; grid-template-columns: 1.2fr repeat(4, 1fr); gap: 32px; }
+  .fcols ul { list-style: none; display: grid; gap: 8px; margin-top: 16px; }
+  .fcols a:hover { color: var(--lp-text); }
+  .legal { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--lp-divider); display: flex; justify-content: space-between; }
+  .legal div { display: flex; gap: 32px; }
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap" id="hdr"></div></header>
+<main id="app"></main>
+<script charset="utf-8" src="content.js"></script>
+<script charset="utf-8">
+const L = LP;
+const cta = (center) => `<div class="${center ? "center-cta" : "cta-block"}">
+  <a class="btn btn-primary t-button" href="#">${L.cta} ${ARROW}</a>
+  <span class="t-body">${L.ctaNote}</span></div>`;
+
+document.getElementById("hdr").innerHTML = `
+  <a href="#"><img src="assets/bys-logo-white.svg" width="216" height="27" alt="Build Your Store"></a>
+  <nav>${L.nav.map(n => `<a class="btn btn-ghost t-button" href="#">${n} ${CHEV}</a>`).join("")}
+    ${L.navPlain.map(n => `<a class="btn btn-ghost t-button" href="#">${n}</a>`).join("")}</nav>
+  <div class="right"><a class="btn btn-ghost t-button" href="#">${L.login}</a>
+    <a class="btn btn-primary t-button" href="#">${L.cta} ${ARROW}</a></div>`;
+
+document.getElementById("app").innerHTML = `
+<section class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <h1 class="t-display">${L.hero.pre} <span class="hl">${L.hero.free}</span> ${L.hero.post}</h1>
+      <p class="lead t-body">${L.hero.body}</p>
+      ${cta()}
+    </div>
+    <div class="hero-img"><img src="assets/front-page-bl-1-default-desktop.webp" alt=""></div>
+  </div>
+  <div class="trust">
+    <img class="mono" src="assets/front-page-bl-1-1.webp" width="255" alt="Shopify partners">
+    <img src="assets/front-page-bl-1-2.webp" width="80" alt="Shopify commerce coach">
+    <div class="vr"></div>
+    <div class="users"><img src="assets/front-page-bl-1-3.webp" width="92" alt=""><span class="t-body">${L.trustCustomers}</span></div>
+  </div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <div class="label t-button">${L.how.title}</div>
+  <div class="steps">${L.how.steps.map((s, i) => `
+    <div class="row"><span class="t-button">0${i + 1}</span>
+      <h3 class="t-display">${s.t}</h3>
+      <div style="display:flex;gap:24px;align-items:flex-start"><img src="${s.icon}" alt=""><p class="t-body">${s.d}</p></div></div>`).join("")}
+  </div>
+  ${cta(true)}
+</div></section>
+
+<section class="s" style="padding-top:0"><div class="wrap">
+  ${L.features.map((f, i) => `<div class="feat">
+    <span class="t-button accent">0${i + 1}</span>
+    <div><h3 class="t-title">${f.t}</h3><p class="t-body">${f.d}</p></div>
+    <div class="img"><img src="${f.img}" alt=""></div></div>`).join("")}
+  ${cta(true)}
+</div></section>
+
+<section class="s light"><div class="wrap">
+  <div class="s-head"><div><div class="label t-button">${L.customers.sub}</div><h2 class="t-title">${L.customers.title}</h2></div></div>
+  <div class="q-grid">${L.customers.quotes.map(q => `<div><p class="t-body">“${q.q}”</p><div class="who t-button">${q.a}</div></div>`).join("")}</div>
+  <div class="shots">${L.customers.shots.map(s => `<img src="${s}" alt="">`).join("")}</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <div class="s-head"><h2 class="t-title" style="max-width:1000px">${L.experts.title}</h2>
+    <div class="ctrls"><button class="arrow-btn" data-sl="ex" data-d="-1" aria-label="Previous" style="transform:scaleX(-1)">${ARROW}</button><button class="arrow-btn" data-sl="ex" data-d="1" aria-label="Next">${ARROW}</button></div></div>
+  <div class="slider" id="ex">${L.experts.items.map(e => `<article class="mcard"><img src="${e.img}" alt="${e.n}"><div>
+    <p class="t-body">“${e.q}”</p><div class="who t-button">${e.n}</div><div class="t-body">${e.r}</div></div></article>`).join("")}</div>
+</div></section>
+
+<section class="s stores"><div class="wrap">
+  <div class="s-head"><div><div class="label t-button">${L.created.sub}</div><h2 class="t-title">${L.created.title}</h2></div>
+    <div class="ctrls"><button class="arrow-btn" data-sl="st" data-d="-1" aria-label="Previous" style="transform:scaleX(-1)">${ARROW}</button><button class="arrow-btn" data-sl="st" data-d="1" aria-label="Next">${ARROW}</button></div></div>
+  <div class="slider" id="st">${L.created.stores.map(s => `<article class="card"><img src="${s.img}" alt="${s.n} store">
+    <div class="meta"><span class="t-button">${s.n}</span><span class="t-body">👍 ${s.r}</span></div>
+    <a class="btn btn-pill t-button" href="#">${L.created.use} ${ARROW}</a></article>`).join("")}</div>
+  ${cta(true)}
+</div></section>
+
+<section class="s"><div class="wrap faq-grid">
+  <h2 class="t-title">${L.faq.title}</h2>
+  <div>${L.faq.items.map(([q, a]) => `<div class="faq-row" data-faq aria-expanded="false">
+    <div class="q"><span class="t-button">${q}</span><span class="pm">+</span></div>
+    <div class="a"><div class="t-body">${esc(a)}</div></div></div>`).join("")}</div>
+</div></section>
+
+<div class="wrap"><div class="final"><h2 class="t-display">${L.final}</h2>${cta()}</div></div>
+
+<footer><div class="wrap">
+  <div class="fcols"><div><img src="assets/bys-logo-white.svg" width="216" alt="Build Your Store"><p class="t-body" style="margin-top:16px">${L.footer.lead}</p></div>
+    ${L.footer.cols.map(([h, ls]) => `<div><div class="t-button">${h}</div><ul>${ls.map(l => `<li><a class="t-body" href="#">${l}</a></li>`).join("")}</ul></div>`).join("")}</div>
+  <div class="legal"><span class="t-body">${L.footer.copy}</span><div>${L.footer.legal.map(l => `<a class="t-body" href="#">${l}</a>`).join("")}</div></div>
+</div></footer>`;
+
+faqToggle();
+document.querySelectorAll("[data-sl]").forEach(b => b.addEventListener("click", () => {
+  const el = document.getElementById(b.dataset.sl); el.scrollBy({ left: b.dataset.d * 348, behavior: "smooth" });
+}));
+const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("in", e.isIntersecting)), { rootMargin: "-35% 0px -35% 0px" });
+document.querySelectorAll(".steps .row").forEach(r => io.observe(r));
+panel("a");
+</script>
+</body>
+</html>

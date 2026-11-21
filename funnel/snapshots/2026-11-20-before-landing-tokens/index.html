@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BYS funnel · Lior style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="funnel.css?v=17">
+</head>
+<body>
+<script src="icons.js?v=4" charset="utf-8"></script>
+<!-- BYS funnel in the Lior style. Steps and copy = the Instant-Form funnel (../../instant-form-funnel), plus Niche and
+     Banners in front (Figma Funnel vNRDM0AN3UrhTXfqh0W88H, pages "🎨 Niche" / "🖼 Banner"). Progress values are placeholders.
+     Shortcuts: ?step=niche | banners | claim | activation | returned | unpaid | unverified | storetype | payment | unique |
+     premium | loader | autods | autods-done | live | live-done | domain | domain-account | domain-existing | domain-connect |
+     domain-done | ugc | course | end -->
+
+<!-- 1 · Niche (5594:126263) -->
+<main class="f-screen" data-step="niche" data-progress="10">
+  <div class="f-main">
+    <h1 class="t-title">Choose Your Niche</h1>
+    <p class="t-body f-sub">Choose a niche you want to start selling in</p>
+    <div class="f-niches" role="radiogroup" aria-label="Niche" id="niches"></div>
+  </div>
+  <div class="f-bar"><button class="f-btn f-btn--primary" id="niche-go" disabled>Continue</button></div>
+</main>
+
+<!-- 2 · Banners (5594:126592; subtitle from 5594:126533 — the [XS] frame repeats the niche subtitle) -->
+<main class="f-screen" data-step="banners" data-progress="20" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Choose Banners for Your Homepage</h1>
+    <p class="t-body f-sub">We've designed 6 banner options for your homepage. Please select two, and we'll add them to your store's homepage</p>
+    <div class="f-banners" id="banners"></div>
+  </div>
+  <div class="f-bar"><button class="f-btn f-btn--primary" id="banners-go" disabled>Continue</button></div>
+</main>
+
+<!-- Claim store (5609:139997) — OUT OF THE FLOW for now (Olena 2026-11-20: not sure the step exists); kept, ?step=claim -->
+<main class="f-screen" data-step="claim" data-progress="30" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Your store is ready. One click to own it!</h1>
+    <p class="t-body f-sub">We've built your store — now just click "Claim store" on the next screen and it's yours. We'll bring you straight back to launch.</p>
+    <img class="f-media" src="assets/claim-animation.png" alt="Shopify screen with the Claim Store button">
+    <div>
+      <p class="t-body-b">What happens next:</p>
+      <ol class="f-steps t-body" style="margin-top:16px">
+        <li><span>You’re taken to Shopify</span></li>
+        <li><span>Click “Claim Store” - one button</span></li>
+        <li><span>We bring you back here</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--primary" id="claim">Claim My Store <svg class="ic"><use href="#external"/></svg></button>
+    <p class="f-bar-note t-small">takes less than 10 seconds</p>
+  </div>
+</main>
+
+<!-- 4 · Activate Shopify plan = "Grab Discount" (5609:140756) -->
+<main class="f-screen" data-step="activation" data-progress="40" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Almost there — activate your Shopify plan to launch.</h1>
+    <p class="t-body f-sub">We've secured you a discount — $1 for 3 months. Confirm your plan on Shopify, then come back to this tab to continue.</p>
+    <button class="f-video f-video--corner" aria-label="Play the video"><img src="assets/activate-animation.png" alt=""><span class="f-video-play"><svg class="ic"><use href="#play"/></svg></span></button>
+  </div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--primary" id="activate">Activate My Store <svg class="ic"><use href="#external"/></svg></button>
+    <button class="f-btn f-btn--secondary" id="done" disabled>I’m Done - Continue</button>
+  </div>
+  <!-- Plan not activated (5609:141876) -->
+  <div class="f-backdrop" id="unpaid" hidden>
+    <section class="f-sheet" role="dialog" aria-modal="true" aria-labelledby="unpaid-title">
+      <button class="f-sheet-close" data-close aria-label="Close"><svg class="ic"><use href="#x"/></svg></button>
+      <svg class="f-sheet-icon is-warning" aria-hidden="true"><use href="#warning"/></svg>
+      <h2 class="t-title" id="unpaid-title">Almost there!<br>Your Shopify plan still needs to be activated</h2>
+      <p class="t-body" style="margin-top:12px">You are one step away from your store. It looks like your plan wasn’t confirmed. Complete it now - it’s only <strong>$1 for 3 months.</strong></p>
+      <div class="f-sheet-actions">
+        <button class="f-btn f-btn--primary" id="pay">Complete My Payment <svg class="ic"><use href="#external"/></svg></button>
+        <button class="f-btn f-btn--secondary" id="verify">I already paid — verify now</button>
+      </div>
+    </section>
+  </div>
+  <!-- Couldn't verify (5639:162654) -->
+  <div class="f-backdrop" id="unverified" hidden>
+    <section class="f-sheet" role="dialog" aria-modal="true" aria-labelledby="unverified-title">
+      <button class="f-sheet-close" data-close aria-label="Close"><svg class="ic"><use href="#x"/></svg></button>
+      <svg class="f-sheet-icon is-error" aria-hidden="true"><use href="#alert"/></svg>
+      <h2 class="t-title" id="unverified-title">Oops! It looks like we couldn't verify your payment.</h2>
+      <p class="t-body" style="margin-top:12px">Let’s make sure you’ve completed the payment process on Shopify.</p>
+      <ol class="f-steps t-body" style="margin-top:24px">
+        <li><span><button class="f-inline-link" data-open-plan>Access Shopify Plans</button></span></li>
+        <li><span>Confirm the <strong>"BASIC"</strong> Monthly Plan</span></li>
+        <li><span>Enter your business address.</span></li>
+        <li><span>Choose Credit Card as your Payment Method.</span></li>
+        <li><span>Enter your credit card details.</span></li>
+        <li><span>Click on the <strong>"Subscribe"</strong> button on the right side of the screen.</span></li>
+      </ol>
+      <p class="f-note t-body" style="margin-top:24px"><svg class="ic"><use href="#info"/></svg><span>✏️ Just a quick note<br>We can’t finish your store customization without a chosen plan. <button class="f-inline-link" data-open-plan>Open the Shopify store plan</button></span></p>
+      <div class="f-sheet-actions">
+        <button class="f-btn f-btn--primary" id="verify2">Verify Payment <svg class="ic"><use href="#arrow-right"/></svg></button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- 5 · Pick your store type (Heu97 314:19112) -->
+<main class="f-screen" data-step="storetype" data-progress="50" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Pick your store type</h1>
+    <div class="f-options" role="radiogroup" aria-label="Store type">
+      <label class="f-option"><input type="radio" name="storetype" value="pro" checked><span class="f-tag t-button">One Time Offer</span>
+        <span class="f-option-head"><span class="f-radio"></span><span class="t-body-b">Professional one product store</span></span>
+        <ul class="f-feats t-small">
+          <li><svg class="ic yes"><use href="#check"/></svg>Expert-designed store, ready to launch</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Handpicked products for your niche</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Conversion-focused store copy</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Fast US shipping, no delays</li>
+        </ul>
+        <span class="f-price"><s class="t-body">$197</s><span class="t-body-b">$97 One-time payment</span></span>
+      </label>
+      <label class="f-option"><input type="radio" name="storetype" value="free">
+        <span class="f-option-head"><span class="f-radio"></span><span class="t-body-b">Free beginner store</span></span>
+        <ul class="f-feats t-small">
+          <li><svg class="ic yes"><use href="#check"/></svg>Free Shopify theme</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>2 predesigned banners (not customized)</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>10 pre-loaded products</li>
+          <li class="muted"><svg class="ic no"><use href="#x"/></svg>No handpicked products</li>
+          <li class="muted"><svg class="ic no"><use href="#x"/></svg>No psychology-driven copy</li>
+          <li class="muted"><svg class="ic no"><use href="#x"/></svg>No optimised product funnel</li>
+        </ul>
+      </label>
+    </div>
+  </div>
+  <div class="f-bar"><button class="f-btn f-btn--primary" id="type-go"><span id="type-label">Continue like the Pro</span> <svg class="ic"><use href="#arrow-right"/></svg></button></div>
+
+  <!-- Payment Details (5636:154652), full screen -->
+  <div class="f-backdrop" id="payment" hidden>
+    <section class="f-sheet f-sheet--full" role="dialog" aria-modal="true" aria-labelledby="payment-title">
+      <button class="f-sheet-close" data-close aria-label="Close"><svg class="ic"><use href="#x"/></svg></button>
+      <h2 class="t-title" id="payment-title">Payment Details</h2>
+      <div class="f-summary">
+        <img src="assets/pro-store.png" alt="">
+        <div class="f-summary-body">
+          <p class="f-summary-row t-body-b"><span>Professional One Product Store</span><span>97$</span></p>
+          <p class="t-small muted">Your store built around a single, high-converting product. Designed for speed, simplicity, and maximum focus.</p>
+        </div>
+      </div>
+      <form onsubmit="return false">
+        <label class="f-field"><span class="f-field-label t-small">Card number</span><span class="f-field-row"><input inputmode="numeric" autocomplete="off" placeholder="xxxx xxxx xxxx xxxx"></span></label>
+        <div class="f-field-pair" style="margin-top:24px">
+          <label class="f-field"><span class="f-field-label t-small">Expiration date</span><span class="f-field-row"><input inputmode="numeric" autocomplete="off" placeholder="dd/mm/yy"></span></label>
+          <label class="f-field"><span class="f-field-label t-small">Security code</span><span class="f-field-row"><input inputmode="numeric" autocomplete="off" placeholder="CVC"></span></label>
+        </div>
+        <label class="f-field" style="margin-top:24px"><span class="f-field-label t-small">Country</span><span class="f-field-row"><select required><option value="" selected disabled>Select country</option><option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option></select><svg class="ic ic--20 muted"><use href="#chevron-down"/></svg></span></label>
+      </form>
+      <div class="f-sheet-actions">
+        <button class="f-btn f-btn--primary" id="buy">Buy NOW</button>
+        <p class="f-secure t-small"><svg class="ic"><use href="#lock"/></svg>100% Secure &amp; Safe payment</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- 6a · Make Your Store Unique — free (5609:142554) -->
+<main class="f-screen" data-step="unique" data-progress="60" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Make Your Store Unique</h1>
+    <p class="t-body f-sub">Just hit the <strong>"Create My Custom Store"</strong> button and in under a minute, our AI will do all the customization work for your store, saving you weeks of design and programming time.</p>
+  </div>
+  <div class="f-bar"><button class="f-btn f-btn--primary" data-customize>Customize My Store</button></div>
+</main>
+
+<!-- 6b · Pro, after payment = "Choose Speed" (7003:163038) -->
+<main class="f-screen" data-step="premium" data-progress="60" hidden>
+  <div class="f-main">
+    <h1 class="t-title">You're All Set – Your Premium Store Is On the Way</h1>
+    <p class="t-body f-sub">You’ve unlocked a high-converting store with a winning product and expert copy. We’re applying your upgrades now — <strong>click below to launch in seconds.</strong></p>
+    <div class="f-art" role="img" aria-label="Your one-product store while the upgrades are applied">
+      <div class="f-art-window">
+        <div class="f-art-bar"><i></i><i></i><i></i><span></span></div>
+        <div class="f-art-body"><img src="assets/charging-stand.webp" alt="">
+          <div class="f-art-info"><i class="w1"></i><i class="w2"></i><i class="price"></i><hr><i class="w3"></i><i class="w4"></i><i class="buy"></i></div>
+        </div>
+      </div>
+      <div class="f-art-card"><div><b><svg class="ic"><use href="#check"/></svg></b><i></i></div><div><b><svg class="ic"><use href="#check"/></svg></b><i></i></div><div><b class="is-busy"></b><i></i></div></div>
+    </div>
+  </div>
+  <div class="f-bar"><button class="f-btn f-btn--primary" data-customize>Create My Custom Store</button></div>
+</main>
+
+<!-- Loader (Heu97 314:19395): pop-up over the blurred screen, cannot be dismissed -->
+<div class="f-popup-backdrop" id="loader" hidden>
+  <section class="f-popup" role="dialog" aria-modal="true" aria-labelledby="loader-title" aria-busy="true">
+    <div class="f-loader" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <h2 class="t-title" id="loader-title">Customizing your store...</h2>
+  </section>
+</div>
+
+<!-- 7 · Add Top-Selling Products = AutoDS (5609:143558). Soft gate. -->
+<main class="f-screen" data-step="autods" data-progress="70" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Add Top-Selling Products</h1>
+    <ol class="f-howto t-body">
+      <li><span>Click <strong>"Register to AutoDS"</strong> below.</span></li>
+      <li><span>Enter your name, set your password, and click <strong>“Join”</strong>.</span><img src="assets/autods-step2.png" alt="AutoDS sign-up screen"></li>
+      <li><span>Choose <strong>“Shopify”</strong>.</span><img src="assets/autods-step3.png" alt="AutoDS: select your selling channel"></li>
+      <li><span>Choose plan.</span><img src="assets/autods-step4.png" alt="AutoDS plans"></li>
+      <li><span>Choose payment method.</span><img src="assets/autods-step5.png" alt="AutoDS payment method"></li>
+      <li><span>Connect your new store and add top-selling products from the AutoDS marketplace!</span></li>
+      <li><span>Click the <strong>“Done”</strong> button to move forward.</span></li>
+    </ol>
+  </div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--primary" id="autods-go">Register to AutoDS <svg class="ic"><use href="#external"/></svg></button>
+    <button class="f-btn f-btn--secondary" id="autods-done" disabled>Complete instructions to continue</button>
+  </div>
+</main>
+
+<!-- 8 · Your Shopify Store Is Live (5615:144276). Soft gate. -->
+<main class="f-screen" data-step="live" data-progress="80" hidden>
+  <div class="f-main">
+    <h1 class="t-title">🏆 Your Shopify Store Is Live!</h1>
+    <p class="f-note t-body"><svg class="ic"><use href="#info"/></svg><span><strong>Want to remove the password from your store so everyone can see it?</strong><br>Go to Shopify Admin &gt; Settings &gt; Preferences &gt; <button class="f-inline-link" id="live-password">Store Password</button></span></p>
+  </div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--primary" id="live-go">Access my Store <svg class="ic"><use href="#external"/></svg></button>
+    <button class="f-btn f-btn--secondary" id="live-done" disabled>Complete instructions to continue</button>
+  </div>
+</main>
+
+<!-- 9 · Secure your free domain (7003:163639 → 7004:164535 → 7004:164993 / 165652 → 7004:166315 → 7004:167068) -->
+<main class="f-screen" data-step="domain" data-state="offer" data-progress="90" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Secure your free domain</h1>
+    <p class="t-body f-sub">Kickstart your brand's online presence with a distinctive .store domain!</p>
+    <ul class="f-perks t-small">
+      <li><span class="f-perk-ic"><svg class="ic"><use href="#chart-up"/></svg></span><span><strong class="t-body-b">Get a name that clicks</strong><span class="muted">Sell more with 87% more traffic</span></span></li>
+      <li><span class="f-perk-ic"><svg class="ic"><use href="#percent"/></svg></span><span><strong class="t-body-b">Raise your game, lower your costs</strong><span class="muted">Save more with a 12% lower CPA</span></span></li>
+      <li><span class="f-perk-ic"><svg class="ic"><use href="#search"/></svg></span><span><strong class="t-body-b">Swap scrolls for sales</strong><span class="muted">Stand out with 2x search visibility</span></span></li>
+    </ul>
+    <ul class="f-terms t-body">
+      <li>🤑&nbsp; FREE for one year, then $5.50/year</li>
+      <li>🔥&nbsp; No auto charging</li>
+      <li>💸&nbsp; No credit card is needed</li>
+    </ul>
+    <div class="f-block">
+      <p class="t-body-b">Enter your desired domain name:</p>
+      <label class="f-field f-domain-input"><span class="f-field-row"><input id="domain-name" placeholder="Ex: yourname.store" autocomplete="off" aria-label="Domain name"></span></label>
+      <p class="f-picked t-body"><span id="domain-value">somedomainname.store</span><button class="f-btn f-btn--link" id="domain-copy">Copy</button></p>
+    </div>
+    <div class="f-block f-after-offer" id="domain-account">
+      <p class="t-body-b">Create your Store account:</p>
+      <label class="f-field"><span class="f-field-label t-small">Full Name</span><span class="f-field-row"><input id="acc-name" placeholder="Enter name" autocomplete="off"></span></label>
+      <label class="f-field"><span class="f-field-label t-small">Email</span><span class="f-field-row"><input id="acc-email" type="email" placeholder="Enter email" autocomplete="off"></span></label>
+      <p class="f-note f-note--warning t-small" id="acc-exists" hidden><svg class="ic"><use href="#warning"/></svg><span>We noticed that you already have an account with this email. We will link this new domain to this existing account</span></p>
+      <label class="f-field"><span class="f-field-label t-small">Password</span><span class="f-field-row"><input id="acc-pass" type="password" placeholder="Enter a password" autocomplete="new-password"></span></label>
+    </div>
+    <div class="f-block f-after-account" id="domain-connect-block">
+      <p class="t-body-b">Connect Your Domain:</p>
+      <ol class="f-howto t-body">
+        <li><span>Click <strong>"Connect Now"</strong> button below and select “Connect existing domain” on Shopify screen:</span><img src="assets/domain-step1.png" alt="Shopify: Domains, Connect existing domain"></li>
+        <li><span>Enter your domain in the provided field and click <strong>“Next”</strong> as shown below:</span><img src="assets/domain-step2.png" alt="Shopify: enter your domain"></li>
+        <li><span>Click <strong>“Verify connection”</strong> button:</span><img src="assets/domain-step3.png" alt="Shopify: Verify connection"></li>
+      </ol>
+      <p class="f-note f-note--warning t-small"><svg class="ic"><use href="#warning"/></svg><span>The domain is auto-connected post this. The propagation time is up to 24 hours and happens within that time duration.</span></p>
+    </div>
+  </div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--primary" id="domain-save" disabled>Save</button>
+    <button class="f-btn f-btn--primary" id="domain-create" disabled hidden>Create Account</button>
+    <button class="f-btn f-btn--primary" id="domain-connect" hidden>Connect Now <svg class="ic"><use href="#external"/></svg></button>
+    <button class="f-btn f-btn--link" id="domain-later" hidden>I’ll do it later</button>
+  </div>
+  <div class="f-popup-backdrop" id="domain-done" hidden>
+    <section class="f-popup" role="dialog" aria-modal="true" aria-labelledby="domain-done-title">
+      <svg class="f-popup-icon" aria-hidden="true"><use href="#check"/></svg>
+      <div><h2 class="t-title" id="domain-done-title">Domain Connected Successfully!</h2>
+        <p class="t-body f-sub" style="margin-top:12px">Your store domain is now linked to your Shopify store.</p></div>
+      <button class="f-btn f-btn--primary" id="domain-finish">Done</button>
+    </section>
+  </div>
+</main>
+
+<!-- 10 · Create UGC (5622:150340). No gate. -->
+<main class="f-screen" data-step="ugc" data-progress="95" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Create Viral Videos in Minutes</h1>
+    <p class="t-body f-sub">Turn any product into a scroll-stopping ad. Upload your link and get videos ready for TikTok, Instagram &amp; YouTube.</p>
+    <button class="f-video f-video--corner" id="ugc-media" aria-label="Play — CreateUGC"><img src="assets/ugc-banner.png" alt="CreateUGC"><span class="f-video-play"><svg class="ic"><use href="#play"/></svg></span></button>
+  </div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--primary" id="ugc-go">Generate my First Video <svg class="ic"><use href="#external"/></svg></button>
+    <button class="f-btn f-btn--secondary" id="ugc-done">Done</button>
+  </div>
+</main>
+
+<!-- 11 · Take Your Course (5622:150728). External hand-off, no Continue. -->
+<main class="f-screen" data-step="course" data-progress="100" hidden>
+  <div class="f-main">
+    <h1 class="t-title">Shopify Dropshipping Course 2026</h1>
+    <p class="t-body f-sub">In this video we are going to cover <strong>EVERYTHING you need</strong> to know to start your shopify dropshipping store.<br>
+      I will be going through step by step how to find winning products, how to qualify winning products, how to set up your Shopify settings, how to add facebook pixels, how to run facebook advertisements, how to create the ad creatives, how to fulfill orders, how to build out your Shopify home page and landing page, plus more!</p>
+    <button class="f-video" data-course aria-label="Watch the course on YouTube"><img src="assets/course-video.png" alt="How To Start Dropshipping On Shopify — video preview"></button>
+  </div>
+  <div class="f-bar"><button class="f-btn f-btn--primary" data-course>Take Your Course <svg class="ic"><use href="#external"/></svg></button></div>
+</main>
+
+<!-- prototype end marker -->
+<main class="f-screen" data-step="end" hidden>
+  <div class="f-main"><p class="t-small muted">Prototype</p><h1 class="t-title">End of the funnel</h1></div>
+  <div class="f-bar"><button class="f-btn f-btn--secondary" id="restart">Start over</button></div>
+</main>
+
+<!-- Simulated hand-off (prototype only, not a design screen) -->
+<main class="f-sim" data-step="shopify" hidden>
+  <div class="f-sim-tab"><span id="sim-host">shopify.com</span><span>new tab · simulated</span></div>
+  <div class="f-sim-body"><p class="t-small" id="sim-sub">Shopify — simulated</p><h1 class="t-title" id="sim-title"></h1><p class="t-body" id="sim-text"></p></div>
+  <div class="f-bar">
+    <button class="f-btn f-btn--secondary" id="sim-back">Back to BuildYourStore</button>
+    <button class="f-btn f-btn--secondary" id="sim-back-unpaid" hidden>Back without paying</button>
+  </div>
+</main>
+
+<!-- presentation only -->
+<div class="pp" hidden><select id="pp" aria-label="Jump to a screen (presentation only)"></select></div>
+
+<script charset="utf-8">
+  const $ = id => document.getElementById(id);
+  const screens = [...document.querySelectorAll('main[data-step]')];
+
+  // header + progress go into every design screen (one source)
+  screens.filter(s => s.classList.contains('f-screen')).forEach(s => {
+    s.insertAdjacentHTML('afterbegin', '<header class="f-header"><img class="f-logo" src="assets/bys-logo-white.svg" alt="BuildYourStore"><button class="f-account" aria-label="My account"><span class="f-avatar"><svg class="ic"><use href="#user"/></svg></span><span class="f-account-label t-small">My account<svg class="ic"><use href="#chevron-down"/></svg></span></button></header>');
+    const p = s.dataset.progress;
+    if (p) s.querySelector('.f-bar').insertAdjacentHTML('afterbegin', `<div class="f-progress" role="progressbar" aria-label="Setup progress" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100"><span style="width:${p}%"></span></div>`);
+  });
+
+  // celebration on "Your Shopify Store Is Live!" — square confetti in the DS colours, once per entry
+  function confetti() {
+    const box = document.createElement('div'); box.className = 'f-confetti'; box.setAttribute('aria-hidden', 'true');
+    const C = ['#d9bd9a', '#e8d7c0', '#c89b6f', '#ffffff', '#686868']; // sand, sand-light, sand-dark, white, gray
+    box.innerHTML = Array.from({ length: 70 }, () => {
+      const w = 4 + Math.random() * 8, tall = Math.random() < .35;
+      return `<i style="left:${Math.random() * 100}%;width:${tall ? 3 : w}px;height:${tall ? w * 2 : w}px;background:${C[Math.floor(Math.random() * C.length)]};--x:${(Math.random() - .5) * 160}px;--r:${(Math.random() - .5) * 900}deg;--d:${2 + Math.random() * 1.6}s;--delay:${Math.random() * .6}s"></i>`;
+    }).join('');
+    document.body.append(box); setTimeout(() => box.remove(), 4500);
+  }
+
+  function show(step, url) {
+    screens.forEach(s => { s.hidden = s.dataset.step !== step; });
+    scrollTo(0, 0);
+    history.replaceState(null, '', '?step=' + (url || step) + (new URLSearchParams(location.search).has('menu') ? '&menu=1' : ''));
+    $('pp').value = url || step;
+    if (step === 'live' && url !== 'live-done') confetti();
+  }
+
+  // ---- Niche ----
+  const NICHES = [['fashion','n-fashion','Fashion & Apparel'],['pets','n-pets','Pets'],['electronics','n-electronics','Electronics & Gadgets'],['home','n-home','Home & Garden'],['sport','n-sport','Sport'],['unsure','n-unsure','I’m not sure']];
+  $('niches').innerHTML = NICHES.map(([v, ic, l]) => `<label class="f-niche"><input type="radio" name="niche" value="${v}"><svg class="ic ic--32"><use href="#${ic}"/></svg><span class="t-body">${l}</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
+  const niche = () => document.querySelector('input[name=niche]:checked')?.value;
+  document.querySelectorAll('input[name=niche]').forEach(r => r.onchange = () => { $('niche-go').disabled = false; });
+  // banner set follows the niche; "I'm not sure" → fashion (open question)
+  function renderBanners() {
+    const set = { fashion: 'fashion', pets: 'pets', electronics: 'electronics', home: 'home', sport: 'sport', unsure: 'fashion' }[niche() || 'fashion'];
+    const mob = set !== 'sport'; // sports has no mobile images
+    $('banners').innerHTML = [1,2,3,4,5,6].map(i => `<label class="f-banner"><input type="checkbox" name="banner" value="${i}"><picture><source media="(min-width:768px)" srcset="assets/banners/${set}/${i}.jpg"><img src="assets/banners/${set}/${i}${mob ? '-m' : ''}.jpg" alt="Banner ${i}"></picture><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
+    const picked = [];
+    document.querySelectorAll('input[name=banner]').forEach(b => b.onchange = () => {
+      if (b.checked) { picked.push(b); if (picked.length > 2) picked.shift().checked = false; }   // a 3rd pick replaces the first
+      else picked.splice(picked.indexOf(b), 1);
+      $('banners-go').disabled = picked.length !== 2;
+    });
+    $('banners-go').disabled = true;
+  }
+  $('niche-go').onclick = () => { renderBanners(); show('banners'); };
+  $('banners-go').onclick = () => { setActivation(false); show('activation'); }; // Claim is out of the flow for now (Olena 2026-11-20) — screen kept, reachable via ?step=claim
+
+  // ---- Activation ----
+  function setActivation(returned) {
+    $('done').disabled = !returned;
+    $('done').className = 'f-btn ' + (returned ? 'f-btn--primary' : 'f-btn--secondary');
+    $('activate').className = 'f-btn ' + (returned ? 'f-btn--outline' : 'f-btn--primary');
+  }
+
+  // ---- Simulated hand-offs ----
+  let pending = null, paid = false;
+  const SIM = {
+    claim: ['Claim your store', 'Here the merchant presses “Claim Store” on Shopify, then comes back.'],
+    plan:  ['Activate your plan', 'Here the merchant activates the Shopify plan (3 days free, then $1/month for 3 months), then comes back.'],
+    store: ['Your store', 'Here the merchant sees the live store on Shopify, then comes back to this tab.', 'yourstore.myshopify.com'],
+    password: ['Store password', 'Here the merchant turns the storefront password off in Shopify Admin > Settings > Preferences, then comes back.', 'admin.shopify.com'],
+    ugc: ['CreateUGC', 'Here the merchant opens CreateUGC in a new tab to make a video ad; there is no return signal.', 'createugc.ai', 'CreateUGC'],
+    course: ['Shopify Dropshipping Course', 'Here the course opens on YouTube in a new tab; the funnel ends here.', 'youtube.com', 'YouTube'],
+    domain: ['Connect existing domain', 'Here the merchant connects the .store domain in Shopify Admin > Settings > Domains, then comes back to this tab.', 'admin.shopify.com'],
+    autods: ['Register to AutoDS', 'Here the merchant signs up on AutoDS, picks a plan and adds products, then comes back to this tab.', 'autods.com', 'AutoDS'],
+  };
+  function handOff(kind, next) {
+    const [t, x, host, who] = SIM[kind];
+    $('sim-title').textContent = t; $('sim-text').textContent = x;
+    $('sim-host').textContent = host || 'shopify.com'; $('sim-sub').textContent = (who || 'Shopify') + ' — simulated';
+    $('sim-back').textContent = kind === 'plan' ? 'Back — plan activated' : 'Back to BuildYourStore';
+    $('sim-back-unpaid').hidden = kind !== 'plan';
+    pending = next; show('shopify');
+  }
+  const goBack = isPaid => { if (isPaid !== undefined) paid = isPaid; const n = pending || (() => show('niche')); pending = null; n(); };
+  $('sim-back').onclick = () => goBack(true);
+  $('sim-back-unpaid').onclick = () => goBack(false);
+
+  // ---- Sheets ----
+  const SHEETS = ['unpaid', 'unverified', 'payment'];
+  function sheet(id) { SHEETS.forEach(s => { $(s).hidden = s !== id; }); document.body.style.overflow = id ? 'hidden' : ''; }
+  document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => sheet(null));
+  SHEETS.forEach(s => $(s).onclick = e => { if (e.target === $(s)) sheet(null); });
+  const toPlan = () => { sheet(null); $('activate').click(); };
+  $('pay').onclick = toPlan;
+  document.querySelectorAll('[data-open-plan]').forEach(b => b.onclick = toPlan);
+  const verify = () => { sheet(null); if (paid) show('storetype'); else setTimeout(() => sheet('unverified'), 250); };
+  $('verify').onclick = verify; $('verify2').onclick = verify;
+
+  // ---- Store type ----
+  const typeRadios = [...document.querySelectorAll('input[name=storetype]')];
+  const selectedType = () => typeRadios.find(r => r.checked).value;
+  typeRadios.forEach(r => r.onchange = () => { $('type-label').textContent = selectedType() === 'pro' ? 'Continue like the Pro' : 'Continue with free store'; });
+  $('type-go').onclick = () => selectedType() === 'pro' ? sheet('payment') : show('unique');
+  $('buy').onclick = () => { sheet(null); show('premium'); };
+
+  // ---- Loader ----
+  document.querySelectorAll('[data-customize]').forEach(b => b.onclick = () => {
+    $('loader').hidden = false; document.body.style.overflow = 'hidden';
+    setTimeout(() => { $('loader').hidden = true; document.body.style.overflow = ''; setAutods(false); show('autods'); }, 3000);
+  });
+
+  // ---- Soft gates: the second button unlocks after the hand-off and becomes the one primary ----
+  function gate(go, done, opened) {
+    $(done).disabled = !opened;
+    $(done).textContent = opened ? 'Done' : 'Complete instructions to continue';
+    $(done).className = 'f-btn ' + (opened ? 'f-btn--primary' : 'f-btn--secondary');
+    $(go).className = 'f-btn ' + (opened ? 'f-btn--outline' : 'f-btn--primary');
+  }
+  const setAutods = o => gate('autods-go', 'autods-done', o);
+  const setLive = o => gate('live-go', 'live-done', o);
+  $('autods-go').onclick = () => handOff('autods', () => { setAutods(true); show('autods', 'autods-done'); });
+  $('autods-done').onclick = () => { setLive(false); show('live'); };
+  $('live-go').onclick = () => handOff('store', () => { setLive(true); show('live', 'live-done'); });
+  $('live-password').onclick = () => handOff('password', () => show('live'));
+  $('live-done').onclick = () => { setDomain('offer'); show('domain'); };
+
+  // ---- UGC ----
+  function setUgc(opened) {
+    $('ugc-done').className = 'f-btn ' + (opened ? 'f-btn--primary' : 'f-btn--secondary');
+    $('ugc-go').className = 'f-btn ' + (opened ? 'f-btn--outline' : 'f-btn--primary');
+  }
+  $('ugc-go').onclick = () => handOff('ugc', () => { setUgc(true); show('ugc'); });
+  $('ugc-done').onclick = () => show('course');
+  $('ugc-media').onclick = () => $('ugc-go').click();
+
+  // ---- Domain ----
+  const dom = document.querySelector('main[data-step=domain]');
+  function setDomain(state) {
+    dom.dataset.state = state;
+    $('domain-save').hidden = state !== 'offer';
+    $('domain-create').hidden = state !== 'account';
+    $('domain-connect').hidden = state !== 'connect';
+    $('domain-later').hidden = state !== 'connect';
+  }
+  const domainName = () => { const v = $('domain-name').value.trim().toLowerCase(); return v.includes('.') ? v : v + '.store'; };
+  $('domain-name').oninput = () => { $('domain-save').disabled = !$('domain-name').value.trim(); };
+  const reveal = id => $(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('domain-save').onclick = () => { $('domain-value').textContent = domainName(); setDomain('account'); reveal('domain-account'); };
+  const acc = ['acc-name', 'acc-email', 'acc-pass'];
+  acc.forEach(id => $(id).oninput = () => { $('domain-create').disabled = acc.some(f => !$(f).value.trim()); });
+  $('domain-create').onclick = () => { setDomain('connect'); reveal('domain-connect-block'); };
+  $('domain-copy').onclick = () => { navigator.clipboard?.writeText($('domain-value').textContent).catch(() => {}); $('domain-copy').textContent = 'Copied'; setTimeout(() => $('domain-copy').textContent = 'Copy', 1500); };
+  $('domain-connect').onclick = () => handOff('domain', () => { show('domain', 'domain-done'); $('domain-done').hidden = false; document.body.style.overflow = 'hidden'; });
+  const afterDomain = () => { $('domain-done').hidden = true; document.body.style.overflow = ''; setUgc(false); show('ugc'); };
+  $('domain-finish').onclick = afterDomain; $('domain-later').onclick = afterDomain;
+
+  // ---- Course ----
+  document.querySelectorAll('[data-course]').forEach(b => b.onclick = () => handOff('course', () => show('end')));
+  $('claim').onclick = () => handOff('claim', () => { setActivation(false); show('activation'); });
+  $('activate').onclick = () => handOff('plan', () => { setActivation(true); show('activation', 'returned'); });
+  $('done').onclick = () => paid ? show('storetype') : sheet('unpaid');
+  $('restart').onclick = () => location.search = '';
+
+  // ---- Shortcuts (presentation) ----
+  const STEPS = ['niche','banners','claim (out of flow)','activation','returned','unpaid','unverified','storetype','payment','unique','premium','loader','autods','autods-done','live','live-done','domain','domain-account','domain-existing','domain-connect','domain-done','ugc','course','end'];
+  $('pp').innerHTML = STEPS.map(s => `<option>${s}</option>`).join('');
+  $('pp').onchange = () => { location.search = '?step=' + $('pp').value + '&menu=1'; };
+  $('pp').parentElement.hidden = !new URLSearchParams(location.search).has('menu');
+
+  function start(s) {
+    const pickNiche = () => { document.querySelector('input[name=niche][value=fashion]').checked = true; $('niche-go').disabled = false; renderBanners(); };
+    if (s === 'banners') { pickNiche(); return show('banners'); }
+    if (s === 'returned') { paid = true; setActivation(true); return show('activation', 'returned'); }
+    if (s === 'unpaid' || s === 'unverified') { setActivation(true); show('activation', s); return sheet(s); }
+    if (s === 'payment') { show('storetype', 'payment'); return sheet('payment'); }
+    if (s === 'loader') { show('unique', 'loader'); $('loader').hidden = false; return; }
+    if (s === 'autods-done') { setAutods(true); return show('autods', s); }
+    if (s === 'autods') { setAutods(false); return show('autods'); }
+    if (s === 'live-done') { setLive(true); return show('live', s); }
+    if (s === 'live') { setLive(false); return show('live'); }
+    if (s.startsWith('domain')) {
+      const st = { 'domain': 'offer', 'domain-account': 'account', 'domain-existing': 'account', 'domain-connect': 'connect', 'domain-done': 'connect' }[s] || 'offer';
+      if (st !== 'offer') { $('domain-name').value = 'somedomainname'; $('domain-save').disabled = false; }
+      setDomain(st); show('domain', s); $('acc-exists').hidden = s !== 'domain-existing';
+      if (s === 'domain-existing') { $('acc-name').value = 'Jane Appleseed'; $('acc-email').value = 'jane@gmail.com'; }
+      if (s === 'domain-done') $('domain-done').hidden = false;
+      return;
+    }
+    if (s === 'ugc') setUgc(false);
+    if (s === 'claim' || s === 'activation') setActivation(false);
+    show(STEPS.includes(s) || s === 'claim' ? s : 'niche');
+  }
+  start((new URLSearchParams(location.search).get('step') || 'niche').replace(' (out of flow)', ''));
+</script>
+</body>
+</html>

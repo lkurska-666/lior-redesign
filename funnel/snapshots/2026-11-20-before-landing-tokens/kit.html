@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Funnel kit · Lior style</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="funnel.css?v=1">
+<style>
+  /* component sheet layout only — not part of the kit */
+  .sheet { max-width: 1200px; margin: 0 auto; padding: 32px var(--gutter) 96px; }
+  .sec { padding: 40px 0; border-top: 1px solid var(--c-divider); }
+  .sec > h2 { font: 700 14px/1.4 var(--font); text-transform: uppercase; color: var(--c-accent); margin-bottom: 24px; }
+  .row { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); align-items: start; }
+  .cap { display: block; margin-top: 8px; color: var(--c-text-2); font: 400 14px/1.5 var(--font); }
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+  .sw div { display: flex; gap: 12px; align-items: center; font: 400 14px/1.4 var(--font); }
+  .sw i { width: 40px; height: 40px; flex: none; border: 1px solid var(--c-divider); }
+  .sw small { display: block; color: var(--c-text-2); font-size: 14px; }
+  .ty > div { padding: 16px 0; border-bottom: 1px solid var(--c-divider); }
+  .icons { display: flex; flex-wrap: wrap; gap: 24px; }
+  .icons figure { display: grid; justify-items: center; gap: 8px; width: 96px; font: 400 14px/1.4 var(--font); color: var(--c-text-2); }
+  .screen-demo { max-width: 390px; border: 1px solid var(--c-divider); }
+  .screen-demo .body { padding: 24px var(--gutter) 32px; display: grid; gap: 12px; }
+  .stack { display: grid; gap: 16px; max-width: 390px; }
+  .stack .f-bar { border: 1px solid var(--c-divider); padding-top: 16px; }
+  .w390 { max-width: 390px; }
+</style>
+</head>
+<body>
+<script src="icons.js?v=3" charset="utf-8"></script>
+<div class="sheet">
+  <h1 class="t-title" style="margin-bottom:8px">Funnel kit</h1>
+  <p class="t-small muted" style="margin-bottom:24px">Lior Pozin DS tokens · JetBrains Mono · square corners. Resize the window: XS 390 · MD 768 · XL 1200 · XXL 1728.</p>
+
+  <section class="sec"><h2>Colours</h2><div class="sw" id="sw"></div></section>
+
+  <section class="sec ty"><h2>Text styles · 5 per screen</h2>
+    <div><p class="t-title">Choose your niche</p><span class="cap">Title · Headings-Bold · <span id="tsize"></span> · 600 · uppercase · XS 20 / MD 32 / XL–XXL 40</span></div>
+    <div><p class="t-body">Choose a niche you want to start selling in</p><span class="cap">Body · Body-Regular-16-Regular · 16/24 · 400</span></div>
+    <div><p class="t-body-b">Professional one product store</p><span class="cap">Body bold · Body-Regular-16-Bold · 16/24 · 700</span></div>
+    <div><p class="t-small muted">Takes less than 10 seconds</p><span class="cap">Small · Body-Small-14-Regular · 14/21 · 400</span></div>
+    <div><p class="t-button">Continue</p><span class="cap">Button · Button-Large · 16/22.4 · 700 · uppercase</span></div>
+  </section>
+
+  <section class="sec"><h2>Icons · 1.5 stroke · square ends</h2>
+    <div class="icons" id="ui-icons"></div>
+    <div class="icons" id="niche-icons" style="margin-top:32px"></div>
+  </section>
+
+  <section class="sec"><h2>Buttons</h2>
+    <div class="row">
+      <div><button class="f-btn f-btn--primary">Continue <svg class="ic"><use href="#arrow-right"/></svg></button><span class="cap">Primary · default</span></div>
+      <div><button class="f-btn f-btn--primary is-hover">Continue <svg class="ic"><use href="#arrow-right"/></svg></button><span class="cap">Primary · hover / pressed</span></div>
+      <div><button class="f-btn f-btn--primary" disabled>Continue <svg class="ic"><use href="#arrow-right"/></svg></button><span class="cap">Primary · disabled</span></div>
+      <div><button class="f-btn f-btn--secondary">I’m Done - Continue</button><span class="cap">Secondary · default</span></div>
+      <div><button class="f-btn f-btn--secondary is-hover">I’m Done - Continue</button><span class="cap">Secondary · hover</span></div>
+      <div><button class="f-btn f-btn--secondary" disabled>I’m Done - Continue</button><span class="cap">Secondary · disabled</span></div>
+      <div><button class="f-btn f-btn--outline">Activate My Store <svg class="ic"><use href="#external"/></svg></button><span class="cap">Outline · external hand-off</span></div>
+      <div><button class="f-btn f-btn--outline is-hover">Activate My Store <svg class="ic"><use href="#external"/></svg></button><span class="cap">Outline · hover</span></div>
+      <div><button class="f-btn f-btn--link">I’ll do it later</button><span class="cap">Link · 44 tall</span></div>
+    </div>
+  </section>
+
+  <section class="sec"><h2>Screen frame · header · progress · sticky bar</h2>
+    <div class="row">
+      <div class="screen-demo">
+        <header class="f-header"><img class="f-logo" src="assets/bys-logo-white.svg" alt="BuildYourStore"></header>
+        <div class="body"><h1 class="t-title">Choose your niche</h1><p class="t-body muted">Choose a niche you want to start selling in</p></div>
+        <div class="f-bar f-bar--static"><div class="f-progress" role="progressbar" aria-valuenow="10"><span style="width:10%"></span></div><button class="f-btn f-btn--primary">Continue</button></div>
+      </div>
+      <div class="stack">
+        <div class="f-bar f-bar--static"><div class="f-progress"><span style="width:60%"></span></div><button class="f-btn f-btn--primary">Activate My Store <svg class="ic"><use href="#external"/></svg></button><button class="f-btn f-btn--secondary" disabled>I’m Done - Continue</button></div>
+        <span class="cap" style="margin-top:-8px">Two buttons · before the return from Shopify</span>
+        <div class="f-bar f-bar--static"><div class="f-progress"><span style="width:60%"></span></div><button class="f-btn f-btn--outline">Activate My Store <svg class="ic"><use href="#external"/></svg></button><button class="f-btn f-btn--primary">I’m Done - Continue <svg class="ic"><use href="#arrow-right"/></svg></button></div>
+        <span class="cap" style="margin-top:-8px">Two buttons · returned: the launcher steps back to outline, one primary at a time</span>
+        <div class="f-bar f-bar--static"><div class="f-progress"><span style="width:20%"></span></div><button class="f-btn f-btn--primary">Claim My Store <svg class="ic"><use href="#arrow-right"/></svg></button><p class="f-bar-note t-small">Takes less than 10 seconds</p></div>
+        <span class="cap" style="margin-top:-8px">Button + note</span>
+        <div class="f-bar f-bar--static"><div class="f-progress"><span style="width:90%"></span></div><button class="f-btn f-btn--primary">Done</button><button class="f-btn f-btn--link">I’ll do it later</button></div>
+        <span class="cap" style="margin-top:-8px">Button + link</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec"><h2>Niche tile · XS row, MD+ tile</h2>
+    <div class="f-niches" role="radiogroup" aria-label="Niche">
+      <label class="f-niche"><input type="radio" name="niche" checked><svg class="ic ic--32"><use href="#n-fashion"/></svg><span class="t-body">Fashion &amp; Apparel</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>
+      <label class="f-niche"><input type="radio" name="niche"><svg class="ic ic--32"><use href="#n-pets"/></svg><span class="t-body">Pets</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>
+      <label class="f-niche"><input type="radio" name="niche"><svg class="ic ic--32"><use href="#n-electronics"/></svg><span class="t-body">Electronics &amp; Gadgets</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>
+      <label class="f-niche"><input type="radio" name="niche"><svg class="ic ic--32"><use href="#n-home"/></svg><span class="t-body">Home &amp; Garden</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>
+      <label class="f-niche"><input type="radio" name="niche"><svg class="ic ic--32"><use href="#n-sport"/></svg><span class="t-body">Sport</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>
+      <label class="f-niche"><input type="radio" name="niche"><svg class="ic ic--32"><use href="#n-unsure"/></svg><span class="t-body">I’m not sure</span><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>
+    </div>
+    <span class="cap">Selected = sand border + filled check (not colour alone). Try clicking.</span>
+  </section>
+
+  <section class="sec"><h2>Banner tile · XS 3:2 · MD+ 12:5 · pick 2</h2>
+    <div class="f-banners" id="banners"></div>
+    <span class="cap">XS one per row (judging artwork needs full width), MD+ two across.</span>
+  </section>
+
+  <section class="sec"><h2>Input field · checkbox</h2>
+    <div class="row">
+      <div>
+        <label class="f-field"><span class="f-field-label t-small">Card number</span><span class="f-field-row"><input placeholder="xxxx xxxx xxxx xxxx"></span><span class="f-field-help t-small">Default</span></label>
+        <label class="f-field is-focus"><span class="f-field-label t-small">Store name</span><span class="f-field-row"><input value="bestpets"><button class="f-field-clear" type="button" aria-label="Clear"><svg class="ic"><use href="#x"/></svg></button></span><span class="f-field-help t-small">Focus · with clear</span></label>
+      </div>
+      <div>
+        <label class="f-field"><span class="f-field-label t-small">Email</span><span class="f-field-row"><input value="jane@gmail.com"></span><span class="f-field-help t-small">Filled</span></label>
+        <label class="f-field is-error"><span class="f-field-label t-small">Expiration date</span><span class="f-field-row"><input value="13/2"></span><span class="f-field-help t-small">Error · message from the form</span></label>
+      </div>
+      <div>
+        <label class="f-field"><span class="f-field-label t-small">Country</span><span class="f-field-row"><input value="United States" readonly><svg class="ic ic--20" style="color:var(--c-text-2)"><use href="#chevron-down"/></svg></span></label>
+        <label class="f-check t-small" style="margin-top:24px"><input type="checkbox" checked><span>Checkbox · checked</span></label>
+        <label class="f-check t-small" style="margin-top:12px"><input type="checkbox"><span>Checkbox · default</span></label>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec"><h2>Option card · store type</h2>
+    <div class="f-options w390" role="radiogroup" aria-label="Store type" style="max-width:560px">
+      <label class="f-option"><input type="radio" name="st" checked><span class="f-tag t-button">One Time Offer</span>
+        <span class="f-option-head"><span class="f-radio"></span><span class="t-body-b">Professional one product store</span></span>
+        <ul class="f-feats t-small">
+          <li><svg class="ic yes"><use href="#check"/></svg>Expert-designed store, ready to launch</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Handpicked products for your niche</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Conversion-focused store copy</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Fast US shipping, no delays</li>
+        </ul>
+        <span class="f-price"><s class="t-body">$197</s><span class="t-body-b">$97 One-time payment</span></span>
+      </label>
+      <label class="f-option"><input type="radio" name="st">
+        <span class="f-option-head"><span class="f-radio"></span><span class="t-body-b">Free beginner store</span></span>
+        <ul class="f-feats t-small">
+          <li><svg class="ic yes"><use href="#check"/></svg>Free Shopify theme</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>2 predesigned banners (not customized)</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>10 pre-loaded products</li>
+          <li class="muted"><svg class="ic no"><use href="#x"/></svg>No handpicked products</li>
+          <li class="muted"><svg class="ic no"><use href="#x"/></svg>No psychology-driven copy</li>
+          <li class="muted"><svg class="ic no"><use href="#x"/></svg>No optimised product funnel</li>
+        </ul>
+      </label>
+    </div>
+  </section>
+
+  <section class="sec"><h2>Numbered steps · note · badge · media</h2>
+    <div class="row">
+      <ol class="f-steps t-small">
+        <li><span>Access Shopify Plans</span></li>
+        <li><span>Confirm the "BASIC" Monthly Plan</span></li>
+        <li><span>Enter your business address.</span></li>
+      </ol>
+      <div style="display:grid;gap:12px">
+        <p class="f-note t-small"><svg class="ic"><use href="#info"/></svg><span>Note · info</span></p>
+        <p class="f-note f-note--warning t-small"><svg class="ic"><use href="#warning"/></svg><span>Note · warning (e.g. DNS propagation)</span></p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="f-badge f-badge--success t-small"><svg class="ic"><use href="#check"/></svg>Success</span><span class="f-badge f-badge--error t-small"><svg class="ic"><use href="#alert"/></svg>Error</span></div>
+      </div>
+      <img class="f-media" src="assets/banners/fashion/2.jpg" alt="" style="aspect-ratio:16/10;object-fit:cover">
+    </div>
+    <span class="cap">Steps: sand numbers with a dashed connector. Copy from the “couldn’t verify” sheet (first 3 of 6).</span>
+  </section>
+
+  <section class="sec"><h2>Bottom sheet (XS) · dialog (MD+)</h2>
+    <div class="f-backdrop f-backdrop--static">
+      <section class="f-sheet" role="dialog" aria-labelledby="sh-t">
+        <button class="f-sheet-close" aria-label="Close"><svg class="ic"><use href="#x"/></svg></button>
+        <svg class="f-sheet-icon is-warning"><use href="#warning"/></svg>
+        <h2 class="t-title" id="sh-t">Almost there! Your Shopify plan still needs to be activated</h2>
+        <p class="t-body" style="margin-top:12px">You are one step away from your store. It looks like your plan wasn’t confirmed. Complete it now - it’s only <strong>$1 for 3 months.</strong></p>
+        <div class="f-sheet-actions">
+          <button class="f-btn f-btn--primary">Complete My Payment <svg class="ic"><use href="#external"/></svg></button>
+          <button class="f-btn f-btn--secondary">I already paid — verify now</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section class="sec"><h2>Pop-up · loader · success</h2>
+    <div class="row">
+      <div class="f-popup-backdrop f-popup-backdrop--static"><div class="f-popup"><div class="f-loader" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="t-title">Customizing your store...</p></div></div>
+      <div class="f-popup-backdrop f-popup-backdrop--static"><div class="f-popup"><svg class="f-popup-icon"><use href="#check"/></svg><p class="t-title">Domain Connected Successfully!</p><button class="f-btn f-btn--primary">Done</button></div></div>
+    </div>
+  </section>
+</div>
+<script charset="utf-8">
+  const S = getComputedStyle(document.documentElement);
+  const cols = ['bg','raised','surface','surface-2','text','text-2','text-3','line','divider','accent','accent-hover','on-accent','secondary','disabled-bg','disabled-text','success','success-bg','error','error-bg','track','backdrop'];
+  document.getElementById('sw').innerHTML = cols.map(k => `<div><i style="background:var(--c-${k})"></i><span>${k}<small>${S.getPropertyValue('--c-' + k).trim()}</small></span></div>`).join('');
+  const ui = ['arrow-right','external','x','check','chevron-down','info','warning','alert','lock','copy','play'];
+  document.getElementById('ui-icons').innerHTML = ui.map(n => `<figure><svg class="ic"><use href="#${n}"/></svg>${n}</figure>`).join('');
+  const ni = [['n-fashion','Fashion'],['n-pets','Pets'],['n-electronics','Electronics'],['n-home','Home'],['n-sport','Sport'],['n-unsure','Not sure']];
+  document.getElementById('niche-icons').innerHTML = ni.map(([n,l]) => `<figure><svg class="ic ic--32"><use href="#${n}"/></svg>${l}</figure>`).join('');
+  document.getElementById('banners').innerHTML = [1,2,3,4,5,6].map(i => `<label class="f-banner"><input type="checkbox" ${i===1||i===4?'checked':''}><picture><source media="(min-width:768px)" srcset="assets/banners/fashion/${i}.jpg"><img src="assets/banners/fashion/${i}-m.jpg" alt="Banner ${i}"></picture><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
+  const t = () => document.getElementById('tsize').textContent = getComputedStyle(document.querySelector('.ty .t-title')).fontSize;
+  t(); addEventListener('resize', t);
+</script>
+</body>
+</html>

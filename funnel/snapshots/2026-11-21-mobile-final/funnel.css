@@ -1,0 +1,339 @@
+/* BYS funnel — Lior style. Values = the landing's Figma file fb-lior-1 (uAbIL5vVm2bs8lSxrHkSaU): variables
+   "Lior / Color" + text styles "Lior/…" + the Button component (Olena 2026-11-20). NEW = not in the file yet,
+   to be added on the Figma transfer. Breakpoints: XS 390 · MD 768 · desktop from 1100 (as the landing's
+   text styles) · XL 1200 · XXL 1728. */
+:root {
+  color-scheme: dark;
+  /* Colour (Lior / Color → Lior / Primitives) */
+  --c-bg: #171717;              /* bg/page → neutral/950 */
+  --c-raised: #202020;          /* bg/surface → neutral/900 — sheet, pop-up */
+  --c-surface: #202020;         /* bg/surface — cards, tiles, notes */
+  --c-surface-border: #3b3b39;  /* border/default → neutral/800 */
+  --c-surface-2: #3b3b39;       /* border/default — grey bars in the illustration */
+  --c-text: #f5f5f5;            /* text/primary → neutral/50 */
+  --c-text-2: #d1d0cc;          /* text/secondary → neutral/300 */
+  --c-text-3: #b5b3af;          /* text/muted → neutral/400 — placeholders, disabled */
+  --c-line: #686868;            /* border/strong → neutral/600 — inputs, outline buttons */
+  --c-divider: #3b3b39;         /* border/default → neutral/800 — hairlines */
+  --c-accent: #dcc09c;          /* bg/accent, text/accent → gold/300 */
+  --c-accent-hover: #edcfaa;    /* NEW bg/accent-hover → gold/200 (the landing's hover) */
+  --c-on-accent: #171717;       /* text/on-accent → neutral/950 */
+  --c-success: #32d057;         /* NEW state/success → green/500 (Lior Pozin DS) */
+  --c-error: #fe6467;           /* NEW state/error → red/400 (Lior Pozin DS) */
+  --c-track: #3b3b39;           /* border/default — progress track */
+  --c-backdrop: #00000099;      /* neutral/black at 60% */
+
+  --font: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --t-title-size: 20px;         /* Lior/Mobile/Title (≤1099) → Lior/Desktop/Title 32 (≥1100) */
+
+  /* Space (Lior / Space), size */
+  --gutter: 16px;               /* space/16 */
+  --header-h: 64px;
+  --border: 1px;
+}
+@media (min-width: 768px)  { :root { --gutter: 32px; --header-h: 80px; } }  /* space/32 */
+@media (min-width: 1100px) { :root { --t-title-size: 32px; } }              /* Lior/Desktop/Title */
+@media (min-width: 1200px) { :root { --header-h: 96px; } }
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+body { background: var(--c-bg); color: var(--c-text); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+.ic { width: 24px; height: 24px; flex: none; }
+.ic--32 { width: 32px; height: 32px; }
+.ic--20 { width: 20px; height: 20px; }
+
+/* ---------- Text styles = the landing's "Lior/…" styles (line height in %) ---------- */
+.t-title   { font: 600 var(--t-title-size)/120% var(--font); letter-spacing: -0.03em; text-transform: uppercase; } /* Lior/Mobile/Title · Lior/Desktop/Title */
+.t-body    { font: 400 16px/150% var(--font); letter-spacing: 0; }                              /* Lior/Body */
+.t-label   { font: 600 16px/120% var(--font); letter-spacing: 0; text-transform: uppercase; }   /* Lior/Label — buttons, card titles, prices */
+.t-small   { font: 400 14px/160% var(--font); letter-spacing: 0; }                              /* Lior/Small */
+.t-eyebrow { font: 400 14px/150% var(--font); letter-spacing: 0.04em; text-transform: uppercase; } /* Lior/Small Upper — labels above blocks */
+.t-button { font: 600 16px/120% var(--font); letter-spacing: 0; text-transform: uppercase; }    /* = Lior/Label (tag) */
+.muted { color: var(--c-text-2); }
+b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
+
+/* ---------- Header (funnel's own: logo + account avatar; the landing's header has a menu) ---------- */
+.f-header { height: var(--header-h); display: flex; align-items: center; padding: 0 var(--gutter); border-bottom: var(--border) solid var(--c-divider); }
+.f-logo { height: 20px; width: auto; }
+@media (min-width: 768px) { .f-logo { height: 27px; } } /* the landing's Logo 216×27 */
+/* Account (avatar) — as on the current funnel (Funnel 5594:126264): avatar on XS, "My account ⌄" from XL */
+.f-account { margin-left: auto; display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.f-avatar { width: 32px; height: 32px; display: grid; place-items: center; border: var(--border) solid var(--c-line); color: var(--c-text); transition: border-color .2s, color .2s; }
+@media (hover: hover) { .f-account:hover .f-avatar { border-color: var(--c-accent); color: var(--c-accent); } }
+.f-avatar .ic { width: 20px; height: 20px; }
+.f-account-label { display: none; align-items: center; gap: 4px; }
+.f-account-label .ic { width: 20px; height: 20px; }
+@media (min-width: 1200px) { .f-account-label { display: inline-flex; } }
+
+/* ---------- Progress ---------- */
+.f-progress { height: 4px; background: var(--c-track); }
+.f-progress > span { display: block; height: 100%; background: var(--c-accent); transition: width .4s ease; }
+
+/* ---------- Button = the landing's Button component (22:735): Style Primary / Outline, Size Default
+   (padding 14/20, gap 24, icon 16, Lior/Label). Full width in the funnel. NEW: State=Disabled. ---------- */
+.f-btn { width: 100%; padding: 14px 20px; display: inline-flex; align-items: center; justify-content: center; gap: 24px;
+  font: 600 16px/120% var(--font); letter-spacing: 0; text-transform: uppercase; text-align: center;
+  border: 0; transition: background .2s, border-color .2s, color .2s; }
+.f-btn .ic { width: 16px; height: 16px; }
+.f-btn--primary { background: var(--c-accent); color: var(--c-on-accent); }
+.f-btn--outline, .f-btn--secondary { border: var(--border) solid var(--c-line); color: var(--c-text); } /* Style=Outline */
+.f-btn--link { padding: 12px 0; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; color: var(--c-text); }
+@media (hover: hover) {
+  .f-btn--primary:hover:not(:disabled) { background: var(--c-accent-hover); }
+  .f-btn--outline:hover:not(:disabled), .f-btn--secondary:hover:not(:disabled) { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); } /* as the landing */
+  .f-btn--link:hover:not(:disabled) { color: var(--c-accent); }
+}
+.f-btn--primary:active:not(:disabled) { background: var(--c-accent-hover); }
+.f-btn:disabled { background: none; border: var(--border) solid var(--c-divider); color: var(--c-text-3); cursor: default; } /* NEW State=Disabled */
+.f-btn--link:disabled { border-color: transparent; }
+.f-btn.is-hover.f-btn--primary { background: var(--c-accent-hover); } /* kit preview only */
+.f-btn.is-hover.f-btn--outline, .f-btn.is-hover.f-btn--secondary { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); }
+.f-btn.is-hover.f-btn--link { color: var(--c-accent); }
+
+/* ---------- Sticky bar ---------- */
+.f-bar { position: sticky; bottom: 0; z-index: 5; display: flex; flex-direction: column; gap: 12px;
+  padding: 0 var(--gutter) calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--c-bg); border-top: var(--border) solid var(--c-divider); }
+.f-bar .f-progress { margin: 0 calc(var(--gutter) * -1) 4px; }
+.f-bar-note { text-align: center; color: var(--c-text-2); }
+.f-bar--static { position: static; }
+
+/* ---------- Card, divider, note ---------- */
+.f-card { background: var(--c-surface); border: var(--border) solid var(--c-surface-border); padding: 24px; }
+.f-divider { height: 1px; background: var(--c-divider); margin: 24px 0; }
+.f-note { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; padding: 16px; /* icon on top, text full width, left (Olena 2026-11-21) */ background: var(--c-surface); border: var(--border) solid var(--c-surface-border); color: var(--c-text-2); }
+.f-note .ic { width: 20px; height: 20px; color: var(--c-text); }
+.f-note--warning .ic { color: var(--c-accent); }
+
+/* ---------- Badge ---------- */
+.f-badge { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border: var(--border) solid; }
+.f-badge .ic { width: 20px; height: 20px; }
+.f-badge--success { border-color: var(--c-success); color: var(--c-success); }
+.f-badge--error   { border-color: var(--c-error); color: var(--c-error); }
+.f-tag { display: inline-block; padding: 4px 8px; background: var(--c-accent); color: var(--c-on-accent); }
+
+/* ---------- Niche tile ---------- */
+.f-niches { display: grid; gap: 12px; }
+.f-niche { position: relative; display: flex; align-items: center; gap: 16px; min-height: 72px; padding: 16px; text-align: left;
+  background: var(--c-surface); border: var(--border) solid var(--c-surface-border); transition: background .2s, border-color .2s; }
+.f-niche input { position: absolute; opacity: 0; pointer-events: none; }
+.f-niche-check { margin-left: auto; width: 24px; height: 24px; display: grid; place-items: center; border: var(--border) solid var(--c-line); color: transparent; }
+.f-niche-check .ic { width: 20px; height: 20px; }
+@media (hover: hover) { .f-niche:hover { border-color: var(--c-line); } }
+.f-niche:has(input:checked), .f-niche.is-selected { border-color: var(--c-accent); }
+.f-niche:has(input:checked) .f-niche-check, .f-niche.is-selected .f-niche-check { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-on-accent); }
+.f-niche:has(input:checked) > .ic, .f-niche.is-selected > .ic { color: var(--c-accent); } /* one-colour icon turns sand when picked */
+.f-niche:has(input:focus-visible) { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+/* MD and up: tiles 3 × 2, icon above the label (as the current funnel) */
+@media (min-width: 768px) {
+  .f-niches { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .f-niche { flex-direction: column; justify-content: center; text-align: center; gap: 12px; min-height: 160px; padding: 24px 16px; }
+  .f-niche-check { position: absolute; top: 12px; right: 12px; margin: 0; }
+}
+
+/* ---------- Banner tile ---------- */
+.f-banners { display: grid; gap: 12px; }
+@media (min-width: 768px) { .f-banners { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+.f-banner { position: relative; display: block; padding: 0; border: var(--border) solid var(--c-surface-border); cursor: pointer; }
+.f-banner input { position: absolute; opacity: 0; pointer-events: none; }
+.f-banner img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: center top; } /* XS: 2:1 as the current funnel (Figma [XS] tile 310×154) */
+@media (min-width: 768px) { .f-banner img { aspect-ratio: 12 / 5; object-position: center top; } } /* wide 3800×1000 → 12:5 crops the sides only */
+.f-banner::after { content: ""; position: absolute; inset: -1px; border: 2px solid transparent; pointer-events: none; transition: border-color .2s; }
+.f-banner .f-niche-check { position: absolute; top: 12px; right: 12px; background: var(--c-bg); border-color: var(--c-line); }
+.f-banner:has(input:checked)::after, .f-banner.is-selected::after { border-color: var(--c-accent); }
+.f-banner:has(input:checked) .f-niche-check, .f-banner.is-selected .f-niche-check { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-on-accent); }
+.f-banner:has(input:focus-visible) { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+
+/* ---------- Input field ---------- */
+.f-field { display: block; }
+.f-field + .f-field { margin-top: 24px; }
+.f-field-label { display: block; color: var(--c-text-2); }
+.f-field-row { display: flex; align-items: center; gap: 8px; border-bottom: var(--border) solid var(--c-line); transition: border-color .2s; }
+.f-field input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--c-text); padding: 12px 0; font: 400 16px/150% var(--font); letter-spacing: 0; }
+.f-field input::placeholder { color: var(--c-text-3); }
+.f-field-clear { width: 24px; height: 24px; display: grid; place-items: center; color: var(--c-text-2); }
+.f-field-clear .ic { width: 20px; height: 20px; }
+.f-field-help { display: block; margin-top: 8px; color: var(--c-text-2); }
+.f-field:focus-within .f-field-row, .f-field.is-focus .f-field-row { border-bottom-color: var(--c-accent); }
+.f-field.is-error .f-field-row { border-bottom-color: var(--c-error); }
+.f-field.is-error .f-field-help { color: var(--c-error); }
+.f-country { display: flex; align-items: center; gap: 4px; padding: 12px 12px 12px 0; border-right: var(--border) solid var(--c-divider); margin-right: 4px; white-space: nowrap; }
+.f-country .ic { width: 20px; height: 20px; color: var(--c-text-2); }
+
+/* ---------- Checkbox, radio ---------- */
+.f-check { display: flex; gap: 12px; align-items: flex-start; color: var(--c-text-2); cursor: pointer; }
+.f-check input { appearance: none; flex: none; width: 20px; height: 20px; margin-top: 1px; border: var(--border) solid var(--c-line); display: grid; place-items: center; cursor: pointer; }
+.f-check input:checked { background: var(--c-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23181919' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/16px no-repeat; border-color: var(--c-accent); }
+.f-radio { flex: none; width: 20px; height: 20px; border-radius: 99999px; border: var(--border) solid var(--c-line); margin-top: 2px; transition: border .2s; } /* radius-round */
+
+/* ---------- Option card (store type) ---------- */
+.f-options { display: grid; gap: 16px; }
+.f-option { position: relative; display: block; padding: 24px; background: var(--c-surface); border: var(--border) solid var(--c-surface-border); cursor: pointer; transition: background .2s, border-color .2s; }
+.f-option input { position: absolute; opacity: 0; pointer-events: none; }
+.f-option-head { display: flex; gap: 12px; align-items: flex-start; }
+.f-option .f-tag { position: absolute; top: -1px; right: -1px; }
+.f-option:has(input:checked), .f-option.is-selected { border-color: var(--c-accent); }
+.f-option:has(input:checked) .f-radio, .f-option.is-selected .f-radio { border: 6px solid var(--c-accent); }
+.f-option:has(input:focus-visible) { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+.f-feats { list-style: none; display: grid; gap: 12px; margin-top: 16px; }
+.f-feats li { display: flex; gap: 12px; align-items: flex-start; }
+.f-feats .ic { width: 20px; height: 20px; margin-top: 1px; }
+.f-feats .yes { color: var(--c-success); }
+.f-feats .no { color: var(--c-error); }
+.f-price { display: flex; align-items: baseline; gap: 8px; margin-top: 24px; }
+.f-price s { color: var(--c-text-2); }
+
+/* ---------- Numbered steps ---------- */
+.f-steps { list-style: none; display: grid; counter-reset: step; }
+.f-steps li { position: relative; display: flex; gap: 16px; padding-bottom: 20px; counter-increment: step; }
+.f-steps li::before { content: counter(step, decimal-leading-zero); flex: none; width: 32px; height: 32px; display: grid; place-items: center;
+  border: var(--border) solid var(--c-accent); color: var(--c-accent); font: 400 14px/150% var(--font); letter-spacing: 0.04em; position: relative; z-index: 1; background: var(--c-bg); } /* Lior/Small Upper */
+.f-steps li:not(:last-child)::after { content: ""; position: absolute; left: 15.5px; top: 32px; bottom: 0; border-left: var(--border) dashed var(--c-line); }
+.f-steps li > span { padding-top: 4px; }
+.f-steps li:last-child { padding-bottom: 0; }
+
+/* ---------- Media ---------- */
+.f-media { display: block; width: 100%; border: var(--border) solid var(--c-divider); }
+
+/* ---------- Bottom sheet ---------- */
+.f-backdrop { position: fixed; inset: 0; z-index: 20; background: var(--c-backdrop); display: flex; align-items: flex-end; justify-content: center; }
+.f-sheet { position: relative; width: 100%; max-height: calc(100dvh - 24px); overflow-y: auto; background: var(--c-raised); border-top: var(--border) solid var(--c-line);
+  padding: 32px var(--gutter) 0; }
+.f-sheet-close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; display: grid; place-items: center; color: var(--c-text-2); }
+.f-sheet-icon { width: 40px; height: 40px; margin-bottom: 20px; }
+.f-sheet-icon.is-warning { color: var(--c-accent); }
+.f-sheet-icon.is-error { color: var(--c-error); }
+.f-sheet-actions { position: sticky; bottom: 0; display: grid; gap: 12px; margin: 24px calc(var(--gutter) * -1) 0; padding: 16px var(--gutter) calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--c-raised); }
+.f-backdrop--static { position: static; padding-top: 48px; background: var(--c-backdrop); }
+/* MD and up: the sheet becomes a centred dialog */
+@media (min-width: 768px) {
+  .f-backdrop { align-items: center; padding: 32px; }
+  .f-sheet { max-width: 560px; border: var(--border) solid var(--c-line); padding: 40px 40px 0; }
+  .f-sheet-actions { margin: 32px -40px 0; padding: 0 40px 40px; }
+}
+
+/* ---------- Pop-up (loader, success) ---------- */
+.f-popup-backdrop { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: var(--gutter); background: var(--c-backdrop); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.f-popup { width: 100%; max-width: 480px; background: var(--c-raised); border: var(--border) solid var(--c-line); padding: 40px 24px; display: grid; justify-items: center; gap: 24px; text-align: center; } /* container-width-small */
+.f-popup-icon { width: 48px; height: 48px; color: var(--c-success); }
+.f-popup-backdrop--static { position: relative; inset: auto; min-height: 360px; }
+/* Loader: a sand square sweeping a 3×3 grid (mono, no image) */
+.f-loader { display: grid; grid-template-columns: repeat(3, 16px); gap: 6px; }
+.f-loader i { width: 16px; height: 16px; border: var(--border) solid var(--c-line); animation: f-cell 1.8s infinite steps(1); }
+@keyframes f-cell { 0%, 11% { background: var(--c-accent); border-color: var(--c-accent); } 12%, 100% { background: transparent; border-color: var(--c-line); } }
+@media (prefers-reduced-motion: reduce) { .f-loader i { animation: none; } .f-loader i:nth-child(5) { background: var(--c-accent); border-color: var(--c-accent); } }
+.f-loader i:nth-child(1){animation-delay:0s}.f-loader i:nth-child(2){animation-delay:.2s}.f-loader i:nth-child(3){animation-delay:.4s}
+.f-loader i:nth-child(6){animation-delay:.6s}.f-loader i:nth-child(5){animation-delay:.8s}.f-loader i:nth-child(4){animation-delay:1s}
+.f-loader i:nth-child(7){animation-delay:1.2s}.f-loader i:nth-child(8){animation-delay:1.4s}.f-loader i:nth-child(9){animation-delay:1.6s}
+
+/* =================== Screens =================== */
+.f-screen { min-height: 100dvh; display: flex; flex-direction: column; }
+.f-screen[hidden] { display: none; }
+.f-main { flex: 1; padding: 32px var(--gutter) 40px; display: flex; flex-direction: column; }
+.f-main > * + * { margin-top: 24px; }
+.f-main > .t-title + .t-body { margin-top: 12px; }
+.f-sub { color: var(--c-text-2); }
+
+/* Summary (payment) */
+.f-summary { display: grid; grid-template-columns: 112px 1fr; gap: 12px 16px; padding: 16px; align-items: start;
+  background: var(--c-surface); border: var(--border) solid var(--c-surface-border); } /* compact: card fields visible at once (Olena 2026-11-21) */
+.f-summary img { width: 112px; aspect-ratio: 503 / 295; object-fit: contain; }
+.f-summary-row { display: grid; gap: 8px; }
+.f-summary-text { grid-column: 1 / -1; }
+.f-field-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.f-field-pair .f-field + .f-field { margin-top: 0; }
+.f-field select { flex: 1; min-width: 0; appearance: none; border: 0; outline: 0; background: transparent; color: var(--c-text); padding: 12px 0; font: 400 16px/150% var(--font); letter-spacing: 0; }
+.f-field select:invalid, .f-field select option[disabled] { color: var(--c-text-3); }
+.f-field select option { color: #000; }
+.f-sheet--full { height: 100dvh; max-height: none; border-top: 0; display: flex; flex-direction: column; }
+.f-sheet--full > * + * { margin-top: 24px; }
+.f-sheet--full .f-sheet-actions { margin-top: auto; padding-top: 24px; }
+.f-secure { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--c-text-2); }
+.f-secure .ic { width: 20px; height: 20px; }
+
+/* How-to list with screenshots (AutoDS, domain connect) */
+.f-howto { list-style: none; display: grid; gap: 24px; counter-reset: step; }
+.f-howto > li { display: grid; grid-template-columns: 32px 1fr; column-gap: 16px; row-gap: 12px; counter-increment: step; }
+.f-howto > li::before { content: counter(step, decimal-leading-zero); width: 32px; height: 32px; display: grid; place-items: center;
+  border: var(--border) solid var(--c-accent); color: var(--c-accent); font: 400 14px/150% var(--font); letter-spacing: 0.04em; } /* Lior/Small Upper */
+.f-howto > li > span { padding-top: 4px; }
+.f-howto > li > img { grid-column: 2; width: 100%; border: var(--border) solid var(--c-divider); }
+
+
+/* Domain */
+.f-perks { list-style: none; display: grid; gap: 16px; }
+.f-perks li { display: flex; gap: 16px; align-items: flex-start; }
+.f-perks .f-perk-ic { flex: none; width: 48px; height: 48px; display: grid; place-items: center; border: var(--border) solid var(--c-line); }
+.f-perks strong { display: block; margin-bottom: 4px; }
+.f-terms { list-style: none; display: grid; gap: 8px; padding: 16px; background: var(--c-surface); border: var(--border) solid var(--c-surface-border); }
+.f-picked { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border: var(--border) solid var(--c-accent); }
+.f-picked .f-btn--link { width: auto; min-height: 0; padding: 0; }
+.f-block { display: grid; gap: 16px; }
+[data-state="offer"] .f-after-offer, [data-state="offer"] .f-after-account, [data-state="account"] .f-after-account { display: none; }
+[data-state="offer"] .f-picked { display: none; }
+[data-state]:not([data-state="offer"]) .f-domain-input { display: none; }
+
+/* Link inside copy */
+.f-inline-link { display: inline; font: inherit; font-weight: 600; text-align: left; color: var(--c-accent); text-decoration: underline; text-underline-offset: 4px; padding: 0; }
+
+/* Course preview */
+.f-video { position: relative; display: block; width: 100%; padding: 0; border: var(--border) solid var(--c-divider); }
+.f-video img { width: 100%; }
+.f-video-play { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; display: grid; place-items: center; background: var(--c-accent); color: var(--c-on-accent); }
+.f-video-play .ic { width: 28px; height: 28px; }
+
+/* Simulated hand-off — prototype only, not a design screen */
+.f-sim { min-height: 100dvh; display: flex; flex-direction: column; background: #e7e7e6; color: #000; }
+.f-sim[hidden] { display: none; }
+.f-sim-tab { display: flex; justify-content: space-between; padding: 16px; border-bottom: 1px dashed #686868; font: 400 14px/1.5 var(--font); }
+.f-sim-body { flex: 1; padding: 32px 16px; display: grid; gap: 12px; align-content: start; }
+.f-sim .f-bar { background: #e7e7e6; border-color: #9e9e9e; padding-top: 16px; }
+.f-sim .f-btn--secondary { background: #171717; color: #f5f5f5; border-color: #171717; }
+
+/* Presentation-only step menu */
+.pp { position: fixed; left: 12px; bottom: 140px; z-index: 50; } /* shown only with &menu=1 */
+.pp select { appearance: none; background: #fff; color: #000; border: 1px solid #000; font: 600 14px/1.4 var(--font); padding: 8px 12px; max-width: 160px; }
+.f-option:has(.f-tag) .f-option-head { margin-top: 16px; } /* keeps the title clear of the corner tag */
+.f-field-pair > * { min-width: 0; }
+
+/* Illustration · Premium store on the way — drawn in code, landing language (browser window, one product, sand
+   accents). No copy inside: grey bars stand for text. Replaces the light/teal art (Olena 2026-11-20). */
+.f-art { position: relative; padding: 0 24px 80px 0; }
+.f-art-window { border: var(--border) solid var(--c-line); background: var(--c-bg); }
+.f-art-bar { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-bottom: var(--border) solid var(--c-divider); }
+.f-art-bar i { width: 8px; height: 8px; border: var(--border) solid var(--c-line); }
+.f-art-bar span { margin-left: 8px; height: 8px; flex: 1; max-width: 120px; background: var(--c-surface-2); }
+.f-art-body { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; align-items: start; }
+.f-art-body img { width: 100%; aspect-ratio: 1; object-fit: cover; background: #fff; }
+.f-art-info { display: grid; gap: 8px; }
+.f-art-info i { display: block; height: 8px; background: var(--c-surface-2); }
+.f-art-info .w1 { width: 100%; background: var(--c-line); } .f-art-info .w2 { width: 70%; background: var(--c-line); }
+.f-art-info .price { width: 40%; height: 10px; background: var(--c-accent); margin-top: 4px; }
+.f-art-info hr { border: 0; border-top: var(--border) solid var(--c-divider); margin: 4px 0; }
+.f-art-info .w3 { width: 85%; } .f-art-info .w4 { width: 60%; }
+.f-art-info .buy { height: 24px; margin-top: 6px; background: var(--c-accent); }
+.f-art-card { position: absolute; right: 0; bottom: 0; width: 58%; display: grid; gap: 10px; padding: 14px; background: var(--c-raised); border: var(--border) solid var(--c-line); }
+.f-art-card div { display: flex; align-items: center; gap: 10px; }
+.f-art-card b { flex: none; width: 18px; height: 18px; display: grid; place-items: center; background: var(--c-accent); color: var(--c-on-accent); }
+.f-art-card b .ic { width: 14px; height: 14px; }
+.f-art-card b.is-busy { background: none; border: var(--border) solid var(--c-accent); animation: f-pulse 1.2s infinite; }
+.f-art-card i { height: 8px; flex: 1; background: var(--c-line); }
+.f-art-card div:nth-child(2) i { flex: .7; } .f-art-card div:nth-child(3) i { flex: .85; background: var(--c-surface-2); }
+@keyframes f-pulse { 50% { background: var(--c-accent); } }
+@media (prefers-reduced-motion: reduce) { .f-art-card b.is-busy { animation: none; } }
+
+/* Store is live — celebration (Olena 2026-11-20): one-off square confetti on entry */
+.f-confetti { position: fixed; inset: 0; z-index: 30; pointer-events: none; overflow: hidden; }
+.f-confetti i { position: absolute; top: -16px; display: block; animation: f-fall var(--d, 2.4s) cubic-bezier(.25,.6,.4,1) var(--delay, 0s) forwards; opacity: 0; }
+@keyframes f-fall {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0); }
+  85% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--x, 0), 105vh) rotate(var(--r, 360deg)); }
+}
+@media (prefers-reduced-motion: reduce) { .f-confetti { display: none; } }
+.f-video--corner .f-video-play { inset: auto 16px 16px auto; margin: 0; width: 48px; height: 48px; } /* bottom-right play on media (Activation video, CreateUGC) — Olena 2026-11-20 */
+.f-video--corner .f-video-play .ic { width: 24px; height: 24px; }

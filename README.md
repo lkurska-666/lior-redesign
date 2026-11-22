@@ -46,3 +46,7 @@ Optional environment variables: `PLAYWRIGHT_MODULE` for a preinstalled Playwrigh
 ## Current A2 hero
 
 The main A2 hero uses a code-rendered black storefront with a modular product grid, a larger SVG pointer, and an enlarged illustrative rising sales chart. The editing badge has been removed. The storefront and chart are aligned without tilt, and the extra background panel has been removed. All layers sit below the portrait’s phone-holding hand. No sales totals or revenue claims are shown in this illustration. Earlier generated 3D object studies remain separate and are not used by A2.
+
+## Current A2 domain illustration
+
+The domain feature uses a black-and-beige headphone product preview with a large custom `.store` address and a separate **FREE FOR 1 YEAR** label. The frame retains the same 6:5 dimensions as the other three feature illustrations. The generated transparent product asset and its prompt are saved in `concepts/assets/product/domain-headphones-v1.png` and the adjacent Markdown file. Earlier concepts retain their original domain compositions.

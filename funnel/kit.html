@@ -6,7 +6,7 @@
 <title>Funnel kit · Lior style</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="funnel.css?v=24">
+<link rel="stylesheet" href="funnel.css?v=25">
 <style>
   /* component sheet layout only — not part of the kit */
   .sheet { max-width: 1200px; margin: 0 auto; padding: 32px var(--gutter) 96px; }
@@ -188,7 +188,7 @@
   document.getElementById('ui-icons').innerHTML = ui.map(n => `<figure><svg class="ic"><use href="#${n}"/></svg>${n}</figure>`).join('');
   const ni = [['n-fashion','Fashion'],['n-pets','Pets'],['n-electronics','Electronics'],['n-home','Home'],['n-sport','Sport'],['n-unsure','Not sure']];
   document.getElementById('niche-icons').innerHTML = ni.map(([n,l]) => `<figure><svg class="ic ic--32"><use href="#${n}"/></svg>${l}</figure>`).join('');
-  document.getElementById('banners').innerHTML = [1,2,3,4,5,6].map(i => `<label class="f-banner"><input type="checkbox" ${i===1||i===4?'checked':''}><picture><source media="(min-width:768px)" srcset="assets/banners/fashion/${i}.jpg"><img src="assets/banners/fashion/${i}-m.jpg" alt="Banner ${i}"></picture><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
+  document.getElementById('banners').innerHTML = [1,2,3,4,5,6].map(i => `<label class="f-banner"><input type="checkbox" ${i===1||i===4?'checked':''}><img src="assets/banners/fashion/${i}.jpg" alt="Banner ${i}"><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
   const t = () => document.getElementById('tsize').textContent = getComputedStyle(document.querySelector('.ty .t-title')).fontSize;
   t(); addEventListener('resize', t);
 </script>

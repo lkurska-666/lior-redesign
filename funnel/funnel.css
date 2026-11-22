@@ -140,7 +140,7 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
 @media (min-width: 768px) { .f-banners { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
 .f-banner { position: relative; display: block; padding: 0; border: var(--border) solid var(--c-surface-border); cursor: pointer; }
 .f-banner input { position: absolute; opacity: 0; pointer-events: none; }
-.f-banner img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: center top; } /* XS: 2:1 as the current funnel (Figma [XS] tile 310×154) */
+.f-banner img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: center; } /* XS: 2:1 as the current funnel; the WIDE image, sides cropped only — heads stay (Olena 2026-11-21) */
 @media (min-width: 768px) { .f-banner img { aspect-ratio: 12 / 5; object-position: center top; } } /* wide 3800×1000 → 12:5 crops the sides only */
 .f-banner::after { content: ""; position: absolute; inset: -1px; border: 2px solid transparent; pointer-events: none; transition: border-color .2s; }
 .f-banner .f-niche-check { position: absolute; top: 12px; right: 12px; background: var(--c-bg); border-color: var(--c-line); }

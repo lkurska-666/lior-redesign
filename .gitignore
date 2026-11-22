@@ -1,4 +1,12 @@
 # internal notes — never public
 funnel/BRIEF.md
 funnel/snapshots/*/BRIEF.md
+.playwright-mcp/
 .DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+__pycache__/
+*.pyc
+*.log

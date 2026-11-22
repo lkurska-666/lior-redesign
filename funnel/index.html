@@ -7,7 +7,7 @@
 <title>BYS funnel · Lior style</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="funnel.css?v=24">
+<link rel="stylesheet" href="funnel.css?v=25">
 </head>
 <body>
 <script src="icons.js?v=4" charset="utf-8"></script>
@@ -363,8 +363,8 @@
   // banner set follows the niche; "I'm not sure" → fashion (open question)
   function renderBanners() {
     const set = { fashion: 'fashion', pets: 'pets', electronics: 'electronics', home: 'home', sport: 'sport', unsure: 'fashion' }[niche() || 'fashion'];
-    const mob = set !== 'sport'; // sports has no mobile images
-    $('banners').innerHTML = [1,2,3,4,5,6].map(i => `<label class="f-banner"><input type="checkbox" name="banner" value="${i}"><picture><source media="(min-width:768px)" srcset="assets/banners/${set}/${i}.jpg"><img src="assets/banners/${set}/${i}${mob ? '-m' : ''}.jpg" alt="Banner ${i}"></picture><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
+    // the wide banner (3800×1000) on every device, sides cropped only — as the current funnel (Olena 2026-11-21)
+    $('banners').innerHTML = [1,2,3,4,5,6].map(i => `<label class="f-banner"><input type="checkbox" name="banner" value="${i}"><img src="assets/banners/${set}/${i}.jpg" alt="Banner ${i}"><span class="f-niche-check"><svg class="ic"><use href="#check"/></svg></span></label>`).join('');
     const picked = [];
     document.querySelectorAll('input[name=banner]').forEach(b => b.onchange = () => {
       if (b.checked) { picked.push(b); if (picked.length > 2) picked.shift().checked = false; }   // a 3rd pick replaces the first

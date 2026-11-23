@@ -7,7 +7,7 @@
 <title>BYS funnel · Lior style</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="funnel.css?v=25">
+<link rel="stylesheet" href="funnel.css?v=20261123">
 </head>
 <body>
 <script src="icons.js?v=4" charset="utf-8"></script>
@@ -110,16 +110,6 @@
   <div class="f-main">
     <h1 class="t-title">Pick your store type</h1>
     <div class="f-options" role="radiogroup" aria-label="Store type">
-      <label class="f-option"><input type="radio" name="storetype" value="pro" checked><span class="f-tag t-button">One Time Offer</span>
-        <span class="f-option-head"><span class="f-radio"></span><span class="t-label">Professional one product store</span></span>
-        <ul class="f-feats t-small">
-          <li><svg class="ic yes"><use href="#check"/></svg>Expert-designed store, ready to launch</li>
-          <li><svg class="ic yes"><use href="#check"/></svg>Handpicked products for your niche</li>
-          <li><svg class="ic yes"><use href="#check"/></svg>Conversion-focused store copy</li>
-          <li><svg class="ic yes"><use href="#check"/></svg>Fast US shipping, no delays</li>
-        </ul>
-        <span class="f-price"><s class="t-body">$197</s><span class="t-label">$97 One-time payment</span></span>
-      </label>
       <label class="f-option"><input type="radio" name="storetype" value="free">
         <span class="f-option-head"><span class="f-radio"></span><span class="t-label">Free beginner store</span></span>
         <ul class="f-feats t-small">
@@ -130,6 +120,16 @@
           <li class="muted"><svg class="ic no"><use href="#x"/></svg>No psychology-driven copy</li>
           <li class="muted"><svg class="ic no"><use href="#x"/></svg>No optimised product funnel</li>
         </ul>
+      </label>
+      <label class="f-option"><input type="radio" name="storetype" value="pro" checked><span class="f-tag t-button">One Time Offer</span>
+        <span class="f-option-head"><span class="f-radio"></span><span class="t-label">Professional one product store</span></span>
+        <ul class="f-feats t-small">
+          <li><svg class="ic yes"><use href="#check"/></svg>Expert-designed store, ready to launch</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Handpicked products for your niche</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Conversion-focused store copy</li>
+          <li><svg class="ic yes"><use href="#check"/></svg>Fast US shipping, no delays</li>
+        </ul>
+        <span class="f-price"><s class="t-body">$197</s><span class="t-label">$97 One-time payment</span></span>
       </label>
     </div>
   </div>
@@ -216,16 +216,20 @@
   </div>
 </main>
 
-<!-- 8 · Your Shopify Store Is Live (5615:144276). No gate: Done is primary from the start. -->
+<!-- 8 · Your Shopify Store Is Live (5615:144276). Soft gate: Done unlocks after Access my Store. -->
 <main class="f-screen" data-step="live" data-progress="80" hidden>
   <div class="f-main">
     <h1 class="t-title">🏆 Your Shopify Store Is Live!</h1>
-    <p class="f-note t-body"><svg class="ic"><use href="#info"/></svg><span><strong>Want to remove the password from your store so everyone can see it?</strong><br>Go to Shopify Admin &gt; Settings &gt; Preferences &gt; <button class="f-inline-link" id="live-password">Store Password</button></span></p>
+    <ol class="f-steps t-body">
+      <li><span>All set! Access your store using the button below.</span></li>
+      <li><span>Return to this tab and get access to the free Shopify Dropshipping Course 2025 and learn how to grow your business!</span></li>
+    </ol>
+    <p class="f-note t-body"><svg class="ic"><use href="#info"/></svg><span><strong>Want to remove the password from your store so everyone can see it?</strong><br>Go to Shopify Admin &gt; <button class="f-inline-link" id="live-password">Online Store</button> &gt; click 🔒 <strong>Private</strong> (top-right) &gt; <strong>Public</strong></span></p>
   </div>
   <div class="f-bar">
-    <!-- No gate (Olena 2026-11-21): the password can be removed later, so "Done" is the primary from the first visit -->
-    <button class="f-btn f-btn--outline" id="live-go">Access my Store <svg class="ic"><use href="#external"/></svg></button>
-    <button class="f-btn f-btn--primary" id="live-done">Done</button>
+    <!-- Soft gate, as the current funnel (Olena 2026-11-23): "Access my Store" first, then "Done" unlocks -->
+    <button class="f-btn f-btn--primary" id="live-go">Access my store <svg class="ic"><use href="#external"/></svg></button>
+    <button class="f-btn f-btn--secondary" id="live-done" disabled>Complete the instructions to continue</button>
   </div>
 </main>
 
@@ -434,12 +438,12 @@
   // ---- Soft gates: the second button unlocks after the hand-off and becomes the one primary ----
   function gate(go, done, opened) {
     $(done).disabled = !opened;
-    $(done).textContent = opened ? 'Done' : 'Complete instructions to continue';
+    $(done).textContent = opened ? 'Done' : (done === 'live-done' ? 'Complete the instructions to continue' : 'Complete instructions to continue');
     $(done).className = 'f-btn ' + (opened ? 'f-btn--primary' : 'f-btn--secondary');
     $(go).className = 'f-btn ' + (opened ? 'f-btn--outline' : 'f-btn--primary');
   }
   const setAutods = o => gate('autods-go', 'autods-done', o);
-  const setLive = () => {}; // Store is live has no gate any more (Olena 2026-11-21)
+  const setLive = o => gate('live-go', 'live-done', o); // soft gate again (Olena 2026-11-23)
   $('autods-go').onclick = () => handOff('autods', () => { setAutods(true); show('autods', 'autods-done'); });
   $('autods-done').onclick = () => { setLive(false); show('live'); };
   $('live-go').onclick = () => handOff('store', () => { setLive(true); show('live', 'live-done'); });
@@ -514,5 +518,6 @@
   }
   start((new URLSearchParams(location.search).get('step') || 'niche').replace(' (out of flow)', ''));
 </script>
+<script src="pattern.js?v=1"></script>
 </body>
 </html>

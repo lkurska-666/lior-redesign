@@ -16,7 +16,7 @@
   --c-line: #686868;            /* border/strong → neutral/600 — inputs, outline buttons */
   --c-divider: #3b3b39;         /* border/default → neutral/800 — hairlines */
   --c-accent: #dcc09c;          /* bg/accent, text/accent → gold/300 */
-  --c-accent-hover: #edcfaa;    /* NEW bg/accent-hover → gold/200 (the landing's hover) */
+  --c-accent-hover: #c9a77c;    /* Primary hover → gold/400 (Figma VariableID:95:20594, darker, Olena 2026-11-24; was gold/200) */
   --c-on-accent: #171717;       /* text/on-accent → neutral/950 */
   --c-success: #32d057;         /* NEW state/success → green/500 (Lior Pozin DS) */
   --c-error: #fe6467;           /* NEW state/error → red/400 (Lior Pozin DS) */

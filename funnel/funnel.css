@@ -370,3 +370,9 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
   .f-panel .f-perks li { flex-direction: column; }
 }
 @media (min-width: 1200px) { .f-header { padding: 0 72px; } }
+/* Short windows (laptops, Olena 2026-11-24): under 900px tall the top/bottom gap 112 → 32 and niche tiles
+   160 → 128, so the Niche step fits with its Continue button (1440×780: ends at ~722). */
+@media (min-width: 768px) and (max-height: 899px) {
+  .f-body { padding-top: 32px; padding-bottom: 32px; }
+  .f-panel .f-niche { min-height: 128px; }
+}

@@ -345,12 +345,12 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
 .f-video--corner .f-video-play .ic { width: 24px; height: 24px; }
 
 /* =================== MD and up: centred panel (Figma "Funnel — Screens", Olena 2026-11-24) ===================
-   Body: padding 112 top/bottom → Panel: bg/surface, border/default, padding 48, gap 32, width 560 (MD) / 816 (XL+).
+   Body: padding 32 top/bottom → Panel: bg/surface, border/default, padding 48, gap 32, width 560 (MD) / 816 (XL+).
    The bar sits inside the panel under the content (not sticky): progress, then buttons, gap 24. */
 .f-body { flex: 1; display: flex; flex-direction: column; }
 .f-panel { flex: 1; display: flex; flex-direction: column; }
 @media (min-width: 768px) {
-  .f-body { padding: 112px var(--gutter); align-items: center; }
+  .f-body { padding: 32px var(--gutter); align-items: center; }   /* one gap for MD, XL, XXL (Olena 2026-11-24) */
   .f-panel { flex: none; width: 100%; max-width: 560px; padding: 48px; gap: 32px; background: var(--c-surface); border: var(--border) solid var(--c-surface-border); }
   .f-panel .f-main { flex: none; padding: 0; }
   .f-panel .f-main > * + * { margin-top: 32px; }
@@ -361,6 +361,7 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
   .f-panel .f-terms { background: var(--c-bg); }      /* Terms = bg/page inside the panel */
   .f-panel .f-art { width: 358px; max-width: 100%; align-self: center; }
   .f-panel .f-niches { grid-template-columns: repeat(2, 1fr); }  /* MD: 2 × 3 tiles (Figma 223 wide) */
+  .f-panel .f-niche { min-height: 128px; padding-top: 16px; padding-bottom: 16px; } /* 16 + icon 24 + 12 + 2 lines 48 + 16 = 116 ≤ 128 */
 }
 @media (min-width: 1100px) {
   .f-panel { max-width: 816px; }
@@ -370,10 +371,3 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
   .f-panel .f-perks li { flex-direction: column; }
 }
 @media (min-width: 1200px) { .f-header { padding: 0 72px; } }
-/* Short windows (laptops, Olena 2026-11-24): under 900px tall the top/bottom gap 112 → 32 and niche tiles
-   160 → 128, so the Niche step fits with its Continue button (1440×780: ends at ~722). */
-/* XL 1200–1727 uses the compact spacing always (Figma XL frames, Olena 2026-11-24) */
-@media (min-width: 768px) and (max-height: 899px), (min-width: 1200px) and (max-width: 1727px) {
-  .f-body { padding-top: 32px; padding-bottom: 32px; }
-  .f-panel .f-niche { min-height: 128px; padding-top: 16px; padding-bottom: 16px; } /* 16 + icon 24 + 12 + 2 lines 48 + 16 = 116 ≤ 128 */
-}

@@ -360,7 +360,7 @@
     scrollTo(0, 0);
     history.replaceState(null, '', '?step=' + (url || step) + (new URLSearchParams(location.search).has('menu') ? '&menu=1' : ''));
     $('pp').value = url || step;
-    if ((step === 'live' && url !== 'live-done') || url === 'returned') confetti(); // + plan activated (Olena 2026-11-24)
+    if ((step === 'live' && url !== 'live-done') || (url === 'returned' && paid)) confetti(); // + only when the plan really is active (Olena 2026-11-24)
   }
 
   // ---- Niche ----

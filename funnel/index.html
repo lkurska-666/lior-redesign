@@ -7,7 +7,7 @@
 <title>BYS funnel · Lior style</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="funnel.css?v=20261123">
+<link rel="stylesheet" href="funnel.css?v=20261124">
 </head>
 <body>
 <script src="icons.js?v=4" charset="utf-8"></script>
@@ -336,6 +336,10 @@
   // header + progress go into every design screen (one source)
   screens.filter(s => s.classList.contains('f-screen')).forEach(s => {
     s.insertAdjacentHTML('afterbegin', '<header class="f-header"><img class="f-logo" src="assets/bys-logo-white.svg" alt="BuildYourStore"><button class="f-account" aria-label="My account"><span class="f-avatar"><svg class="ic"><use href="#user"/></svg></span><span class="f-account-label t-small">My account<svg class="ic"><use href="#chevron-down"/></svg></span></button></header>');
+    // MD and up: content + bar sit in one centred panel (Figma: Body › Panel 560 / 816)
+    const main = s.querySelector('.f-main'), bar = s.querySelector('.f-bar');
+    if (main) { const body = document.createElement('div'); body.className = 'f-body'; const panel = document.createElement('div'); panel.className = 'f-panel';
+      main.before(body); body.appendChild(panel); panel.appendChild(main); if (bar) panel.appendChild(bar); }
     const p = s.dataset.progress;
     if (p) s.querySelector('.f-bar').insertAdjacentHTML('afterbegin', `<div class="f-progress" role="progressbar" aria-label="Setup progress" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100"><span style="width:${p}%"></span></div>`);
   });

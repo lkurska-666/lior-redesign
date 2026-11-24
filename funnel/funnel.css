@@ -31,7 +31,7 @@
   --header-h: 64px;
   --border: 1px;
 }
-@media (min-width: 768px)  { :root { --gutter: 32px; --header-h: 80px; } }  /* space/32 */
+@media (min-width: 768px)  { :root { --gutter: 32px; } }  /* space/32 */
 @media (min-width: 1100px) { :root { --t-title-size: 32px; } }              /* Lior/Desktop/Title */
 @media (min-width: 1200px) { :root { --header-h: 96px; } }
 
@@ -58,7 +58,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
 
 /* ---------- Header (funnel's own: logo + account avatar; the landing's header has a menu) ---------- */
-.f-header { height: var(--header-h); display: flex; align-items: center; padding: 0 var(--gutter); border-bottom: var(--border) solid var(--c-divider); }
+.f-header { height: var(--header-h); display: flex; align-items: center; padding: 0 16px; border-bottom: var(--border) solid var(--c-divider); }
 .f-logo { height: 20px; width: auto; }
 @media (min-width: 768px) { .f-logo { height: 27px; } } /* the landing's Logo 216×27 */
 /* Account (avatar) — as on the current funnel (Funnel 5594:126264): avatar on XS, "My account ⌄" from XL */
@@ -343,3 +343,30 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
 @media (prefers-reduced-motion: reduce) { .f-confetti { display: none; } }
 .f-video--corner .f-video-play { inset: auto 16px 16px auto; margin: 0; width: 48px; height: 48px; } /* bottom-right play on media (Activation video, CreateUGC) — Olena 2026-11-20 */
 .f-video--corner .f-video-play .ic { width: 24px; height: 24px; }
+
+/* =================== MD and up: centred panel (Figma "Funnel — Screens", Olena 2026-11-24) ===================
+   Body: padding 112 top/bottom → Panel: bg/surface, border/default, padding 48, gap 32, width 560 (MD) / 816 (XL+).
+   The bar sits inside the panel under the content (not sticky): progress, then buttons, gap 24. */
+.f-body { flex: 1; display: flex; flex-direction: column; }
+.f-panel { flex: 1; display: flex; flex-direction: column; }
+@media (min-width: 768px) {
+  .f-body { padding: 112px var(--gutter); align-items: center; }
+  .f-panel { flex: none; width: 100%; max-width: 560px; padding: 48px; gap: 32px; background: var(--c-surface); border: var(--border) solid var(--c-surface-border); }
+  .f-panel .f-main { flex: none; padding: 0; }
+  .f-panel .f-main > * + * { margin-top: 32px; }
+  .f-panel .f-main > .t-title + .t-body { margin-top: 16px; }
+  .f-panel .f-bar { position: static; padding: 0; background: none; border-top: 0; }
+  .f-panel .f-bar .f-progress { margin: 0 0 12px; }   /* 12 + bar gap 12 = 24 */
+  .f-panel .f-steps li::before { background: var(--c-surface); }
+  .f-panel .f-terms { background: var(--c-bg); }      /* Terms = bg/page inside the panel */
+  .f-panel .f-art { width: 358px; max-width: 100%; align-self: center; }
+  .f-panel .f-niches { grid-template-columns: repeat(2, 1fr); }  /* MD: 2 × 3 tiles (Figma 223 wide) */
+}
+@media (min-width: 1100px) {
+  .f-panel { max-width: 816px; }
+  .f-panel .f-niches { grid-template-columns: repeat(3, 1fr); }
+  .f-panel .f-options { grid-template-columns: 1fr 1fr; }
+  .f-panel .f-perks { grid-template-columns: repeat(3, 1fr); }
+  .f-panel .f-perks li { flex-direction: column; }
+}
+@media (min-width: 1200px) { .f-header { padding: 0 72px; } }

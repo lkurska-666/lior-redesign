@@ -32,7 +32,7 @@
   --border: 1px;
 }
 @media (min-width: 768px)  { :root { --gutter: 32px; } }  /* space/32 */
-@media (min-width: 1100px) { :root { --t-title-size: 32px; } }              /* Lior/Desktop/Title */
+@media (min-width: 1100px) { :root { --t-title-size: 28px; } }              /* Lior/Desktop/Title — 28 (Olena 2026-11-24, was 32) */
 @media (min-width: 1200px) { :root { --header-h: 96px; } }
 
 /* ---------- Base ---------- */
@@ -355,7 +355,12 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
   .f-panel .f-main { flex: none; padding: 0; }
   .f-panel .f-main > * + * { margin-top: 32px; }
   .f-panel .f-main > .t-title + .t-body { margin-top: 16px; }
-  .f-panel .f-bar { position: static; padding: 0; background: none; border-top: 0; }
+  /* Buttons always visible (Olena 2026-11-24): the whole panel fits the window; when a step is taller,
+     only the content scrolls inside the panel and the bar stays at the panel's bottom. */
+  .f-body { flex: none; height: calc(100dvh - var(--header-h) - var(--border)); }
+  .f-panel { max-height: 100%; min-height: 0; padding-bottom: 48px; }
+  .f-panel .f-main { flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin-right: -24px; padding-right: 24px; scrollbar-width: thin; scrollbar-color: var(--c-line) transparent; }
+  .f-panel .f-bar { position: static; padding: 0; background: none; border-top: 0; flex: none; }
   .f-panel .f-bar .f-progress { margin: 0 0 12px; }   /* 12 + bar gap 12 = 24 */
   .f-panel .f-steps li::before { background: var(--c-surface); }
   .f-panel .f-terms { background: var(--c-bg); }      /* Terms = bg/page inside the panel */
@@ -371,3 +376,43 @@ b, strong { font-weight: 600; }   /* inline emphasis inside Body = SemiBold */
   .f-panel .f-perks li { flex-direction: column; }
 }
 @media (min-width: 1200px) { .f-header { padding: 0 72px; } }
+/* Activation video: our play button (sand square 64) centred on the frame, not in the corner (Olena 2026-11-24) — .f-video--center uses the base .f-video-play */
+
+/* =================== Fluid sizes from MD up (Olena 2026-11-24) ===================
+   Sizes follow the window height between a floor and the Figma value (the cap), so a laptop
+   (1440×780) gets a proportionally smaller panel and a big monitor looks as in Figma. */
+@media (min-width: 768px) {
+  :root {
+    --fl-pad: clamp(24px, 4.5vh, 48px);      /* panel padding: 48 on 1117+, ~35 on 780 */
+    --fl-gap: clamp(16px, 3vh, 32px);        /* gap between blocks */
+    --fl-body: clamp(16px, 4vh, 32px);       /* gap above/below the panel */
+  }
+  .f-body { padding-top: var(--fl-body); padding-bottom: var(--fl-body); }
+  .f-panel { padding: var(--fl-pad); gap: var(--fl-gap); }
+  .f-panel .f-main > * + * { margin-top: var(--fl-gap); }
+  .f-panel .f-main { margin-right: calc(var(--fl-pad) / -2); padding-right: calc(var(--fl-pad) / 2); }
+  .f-panel .f-niche { min-height: clamp(104px, 16vh, 128px); }
+  /* video / course preview: never taller than ~32% of the window, centred */
+  .f-panel .f-video { width: fit-content; max-width: 100%; align-self: center; }
+  .f-panel .f-video img { width: auto; max-width: 100%; max-height: 32vh; }
+}
+@media (min-width: 1100px) {
+  :root { --t-title-size: clamp(22px, 3.2vh, 28px); }
+  .f-panel { max-width: clamp(640px, 92vh, 816px); }   /* 816 on 1117+, ~718 on 780 */
+}
+@media (min-width: 1200px) {
+  :root { --header-h: clamp(64px, 10vh, 96px); }
+  .f-btn:not(.f-btn--link) { min-height: clamp(48px, 6.5vh, 56px); }
+}
+/* Payment sheet (.f-sheet--full) is full-screen on phones only; from MD it is a centred dialog like the others
+   (it was 100dvh tall and touched the top and bottom of the window — fixed 2026-11-24) */
+@media (min-width: 768px) {
+  .f-sheet--full { height: auto; max-height: calc(100dvh - 2 * var(--fl-body)); border-top: var(--border) solid var(--c-line); }
+  .f-sheet--full .f-sheet-actions { margin-top: var(--fl-gap); }
+}
+/* Input = a box, not just an underline (Olena 2026-11-24: the domain field was invisible on the panel).
+   bg/page fill + border/strong frame + 16 side padding; focus = accent frame, error = error frame. */
+.f-field-row { border: var(--border) solid var(--c-line); background: var(--c-bg); padding: 0 16px; margin-top: 8px; }
+.f-field:focus-within .f-field-row, .f-field.is-focus .f-field-row { border-color: var(--c-accent); }
+.f-field.is-error .f-field-row { border-color: var(--c-error); }
+.f-domain-input .f-field-row { margin-top: 0; }

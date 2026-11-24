@@ -7,7 +7,7 @@
 <title>BYS funnel · Lior style</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="funnel.css?v=20261124d">
+<link rel="stylesheet" href="funnel.css?v=20261124n">
 </head>
 <body>
 <script src="icons.js?v=4" charset="utf-8"></script>
@@ -63,7 +63,7 @@
   <div class="f-main">
     <h1 class="t-title">Almost there — activate your Shopify plan to launch.</h1>
     <p class="t-body f-sub">We've secured you a discount — $1 for 3 months. Confirm your plan on Shopify, then come back to this tab to continue.</p>
-    <button class="f-video f-video--corner" aria-label="Play the video"><img src="assets/activate-animation.png" alt=""><span class="f-video-play"><svg class="ic"><use href="#play"/></svg></span></button>
+    <button class="f-video f-video--center" aria-label="Play the video"><img src="assets/activate-animation.png" alt=""><span class="f-video-play"><svg class="ic"><use href="#play"/></svg></span></button>
   </div>
   <div class="f-bar">
     <button class="f-btn f-btn--primary" id="activate">Activate My Store <svg class="ic"><use href="#external"/></svg></button>
@@ -360,7 +360,7 @@
     scrollTo(0, 0);
     history.replaceState(null, '', '?step=' + (url || step) + (new URLSearchParams(location.search).has('menu') ? '&menu=1' : ''));
     $('pp').value = url || step;
-    if (step === 'live' && url !== 'live-done') confetti();
+    if ((step === 'live' && url !== 'live-done') || url === 'returned') confetti(); // + plan activated (Olena 2026-11-24)
   }
 
   // ---- Niche ----
